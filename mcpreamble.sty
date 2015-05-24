@@ -1,0 +1,555 @@
+%--------------------------------------------------------------
+% TODO: Figure out theorems and other math environments
+% TODO(mauricio): XeLaTeX math font    // Sun 24 May 2015 11:32:42 AM EDT
+% TODO(mauricio): setlist options      // Sun 24 May 2015 11:33:01 AM EDT
+% TODO(mauricio): ToC default          // Sun 24 May 2015 11:33:01 AM EDT
+% TODO(mauricio): references (natbib?) // Sun 24 May 2015 11:33:08 AM EDT
+
+%--------------------------------------------------------------
+% standard heading
+
+\NeedsTeXFormat{LaTeX2e}     % Standard
+\ProvidesPackage{mcpreamble} % Mauricio's Custom Preamble
+\RequirePackage[l2tabu, orthodox]{nag} % nag me about things
+
+%--------------------------------------------------------------
+% packages
+
+%\usepackage{etex} % resolves some package conflicts, use if they present
+
+% maths
+\usepackage{amsfonts}   % pretty math
+\usepackage[leqno]{amsmath} % real pretty math
+\usepackage{amssymb}    % seriously, this is beautiful
+\usepackage{amsthm}     % and theorems and stuffs
+\usepackage{array}      % array options
+\usepackage{mathdesign} % extra math symbols
+\usepackage{mathtools}  % even more
+
+% layout and typesetting
+\usepackage{booktabs}   % beautiful tables
+\usepackage{ellipsis}   % spacing pedantic
+\usepackage{geometry}   % page geometry
+\usepackage{float}      % float options
+\usepackage{longtable}  % table across pages
+\usepackage{microtype}  % font tweaking
+\usepackage{multirow}   % multirow (multiple rows)
+\usepackage{titletoc}   % table of contents
+\usepackage[compact, explicit]{titlesec} % title manipulation
+\usepackage{listings}   % pretty code printing
+\usepackage{siunitx}    % SI units
+\usepackage{url}        % break urls cross lines
+\usepackage[normalem]{ulem} % underline, strikeout, etc.
+\usepackage[super]{nth} % adds superscripting \nth{n} is ^{nth}
+
+% customize
+\usepackage{caption}   % awesome captioning options
+\usepackage{color}     % get color in your life
+\usepackage{xcolor}    % get even more color in your life
+\usepackage{enumitem}  % customize enumerate
+\usepackage{environ}   % custom environments
+\usepackage{fancyhdr}  % header and footer
+\usepackage{footmisc}  % footer
+
+% awesome add-ons
+\usepackage{hyperref}  % references
+\usepackage{pgfplots}  % awesome plotting
+\usepackage{tikz}      % vector graphics!
+
+% Referencing
+\usepackage[longnamesfirst]{natbib} % lots of cites
+\usepackage{cleveref}  % semantic figure ref
+\usepackage{varioref}  % ref pages
+
+%--------------------------------------------------------------
+% fonts
+
+\def\mcends{\AtEndOfPackage{\usepackage{bm}\usepackage[italic]{mathastext}}}
+\def\mcfont{\AtEndOfPackage{
+  \ifxetex
+    \usepackage{fontspec}
+    \fontspec{Open Sans}
+    \setmainfont{Open Sans Light}
+    %\setmathfont{Cambria Math}
+  \else
+    \usepackage[T1]{fontenc}
+    %\usepackage[math]{iwona}
+    \usepackage{mathpple}
+    \usepackage{quattrocento}
+    %\usepackage[sfdefault]{quattrocento}
+  \fi
+}}
+
+%--------------------------------------------------------------
+% Package Options
+
+\hypersetup{
+    colorlinks,
+    allbordercolors=white,
+    allcolors=[rgb]{0.05 0.2 0.4},
+}
+
+\usetikzlibrary{
+  arrows,
+  patterns,
+  positioning,
+  calc,
+  fit,
+  intersections,
+  decorations.text,
+  decorations.markings,
+  decorations.pathmorphing,
+  shadows.blur
+}
+
+% Set the overall layout of game theory trees
+\tikzstyle{level 1}=[level distance=3.5cm, sibling distance=3.75cm]
+\tikzstyle{level 2}=[level distance=3.5cm, sibling distance=2.75cm]
+\tikzstyle{level 3}=[level distance=3.5cm, sibling distance=1.75cm]
+\tikzstyle{level 4}=[level distance=3.5cm, sibling distance=0.75cm]
+\tikzstyle{player}=[text centered]
+\tikzstyle{end}=[circle, minimum width=5pt, fill, inner sep=0pt]
+
+\pgfplotsset{
+  compat      = newest,
+  axis x line = middle,
+  axis y line = center,
+  tick align  = outside,
+  yticklabels = {,,},
+  xticklabels = {,,},
+  xtick       = {0},
+  ytick       = {0}
+}
+
+\geometry{
+  margin=1in
+}
+
+\setlist{
+  topsep     = 0pt, %
+  partopsep  = 0pt, %
+  itemsep    = 0pt, %
+  parsep     = 3pt  %
+  %leftmargin =0cm,  %
+  %itemindent =0.6cm, %
+  %label = (\alph*)
+}
+
+\lstset{
+  language          = R,             % Set language
+  tabsize           = 4,             % Tab size
+  basicstyle        = \footnotesize, % Font size
+  flexiblecolumns   = true,          % Make it try to line up columns
+  showstringspaces  = false,         % Don't underline spaces in strings
+  showspaces        = false,         % Don't underline spaces
+  breaklines        = true,          % automatic line breaking
+  breakatwhitespace = true,          % breaks only at white space.
+  %numberstyle       = \footnotesize, % line number font
+  %numbers           = left,          % line number alignment
+  %stepnumber        = 1,             % number every 'stepnumber' lines
+  %numbersep         = 5pt,           % set numbers 'numbersep' from code
+  commentstyle      = \color{black!70}\itshape, % Comments are gray and italics
+  morecomment=[s][\color{black!70}\itshape]{\'\'\'}{\'\'\'},
+}
+
+%--------------------------------------------------------------
+% general options
+
+% lengths
+\linespread{1}                        % space between lines
+\addtolength{\footnotesep}{3pt}       % space to the left of footnote
+\setlength{\parindent}{0pt}           % indent in first line of paragraph
+\setlength{\parskip}{9pt}             % skip between paragraphs
+\renewcommand\arraystretch{1.5}       % array spacing
+\renewcommand{\footnotemargin}{3pt}   % margin to footnote
+
+% style
+\allowdisplaybreaks    % can break math environments
+\pagestyle{fancy}      % fancy header and footer
+\pagenumbering{arabic} % pages numbered 1 to n
+
+% eliminate whitespace for figures that appear solo
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+
+%--------------------------------------------------------------
+% extra maths
+
+\DeclareMathOperator*{\argmin}{arg\!\min}
+\DeclareMathOperator*{\argmax}{arg\!\max}
+\DeclareMathOperator*{\vect}{vec}
+\DeclareMathOperator*{\pmax}{p\!\max}
+\DeclareMathOperator*{\pmin}{p\!\min}
+
+\newcommand\toto{~\substack{\to\\[-2pt]\to}~} % correspondence
+\newcommand\indep{\perp\!\!\!\perp}           % orthogonal
+
+% Other stuffs
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\diag}[1]{\text{diag}\left\{#1\right\}}
+\newcommand{\ind}[1]{\mathbb{I}\left\{#1\right\}}
+
+% make dot and ddot larger (i.e. more visible)
+\renewcommand{\dot}[1]{%
+  \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}}}{#1}}
+\renewcommand{\ddot}[1]{%
+  \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}\hspace{0.05ex}.}}{#1}}
+
+% basic wrappers
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\abs}[1]{|#1|}
+\newcommand{\ceil}[1]{\lceil#1\rceil}
+\newcommand{\floor}[1]{\lfloor#1\rfloor}
+
+\newcommand{\Bset}[1]{\Big\{#1\Big\}}
+\newcommand{\Bpar}[1]{\Big(#1\Big)}
+\newcommand{\Brac}[1]{\Big[#1\Big]}
+\newcommand{\Babs}[1]{\Big|#1\Big|}
+\newcommand{\Bnorm}[1]{\Big\|#1\Big\|}
+\newcommand{\Bceil}[1]{\Big\lceil#1\Big\rceil}
+\newcommand{\Bfloor}[1]{\Big\lfloor#1\Big\rfloor}
+
+\newcommand{\Fset}[1]{\left\{#1\right\}}
+\newcommand{\Fpar}[1]{\left(#1\right)}
+\newcommand{\Frac}[1]{\left[#1\right]}
+\newcommand{\Fabs}[1]{\left|#1\right|}
+\newcommand{\Fnorm}[1]{\left\|#1\right\|}
+\newcommand{\Fceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\Ffloor}[1]{\left\lfloor#1\right\rfloor}
+
+%--------------------------------------------------------------
+% math environments
+
+\newtheorem{theorem}{\mctheoremstyle Theorem}[]
+\newtheorem{claim}[]{\mctheoremstyle Claim}
+\newtheorem{corollary}[]{\mctheoremstyle Corollary}
+\newtheorem{definition}[]{\mctheoremstyle Definition}
+\newtheorem{lemma}[]{\mctheoremstyle Lemma}
+\newtheorem{proposition}[]{\mctheoremstyle Proposition}
+\newtheorem{assumption}[]{\mctheoremstyle Assumption}
+\newtheorem{remark}[]{\mctheoremstyle Remark}
+
+%--------------------------------------------------------------
+% extra environments
+
+% HideLevel environment
+\newcommand\SetHideLevel{1pt}
+\NewEnviron{hidelevel}[1]{
+  \newdimen\level\level=#1pt
+  \ifdim\level<\SetHideLevel
+    \BODY
+  \else
+  \fi
+}
+
+% TA Comment environment
+\NewEnviron{tacomment}[1]{
+  \newdimen\level\level=#1pt
+  \ifdim\level<\SetHideLevel
+    ~\\[-18pt]
+    \rule{\textwidth}{0.5pt}
+    {\tacaption\tafootnote\footnotesize\color{normalgray}\itshape \BODY}
+    ~\\[-6pt]
+    \rule{\textwidth}{0.5pt}
+  \else
+  \fi
+}
+
+%--------------------------------------------------------------
+% titlesec - title format
+
+\titleformat{\section}[display]{
+  \sectionstyle
+  \sectionstuffsbefore
+}{\sectiontype #1}{0pt}{\sectionstuffsafter}
+
+\titleformat{\subsection}{
+  \subsectionstyle
+}{\subsectiontype #1}{0pt}{}
+
+\titleformat{\subsubsection}[runin]{
+  \subsubsectionstyle
+}{\subsubsectiontype #1}{0pt}{}
+
+%--------------------------------------------------------------
+% fancyhdr - fancy header and footer
+
+\cfoot{\thepage}
+\rhead{\color{light-gray} \mcauthor}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{14pt}
+
+%--------------------------------------------------------------
+% titletoc - table of contents style
+
+% \renewcommand{\contentsname}{Table of Contents\vspace{-\myaftersection}}
+% \titlecontents{section}
+%   [25pt]
+%   {}
+%   {%
+%     \bfseries
+%     \mytitlefamily
+%     \contentslabel{15pt}
+%   }
+%   {\hspace*{0pt}}
+%   {\titlerule*[\mydotsspacing]{.}\contentspage}
+%
+% \titlecontents{subsection}
+%   [40pt]
+%   {}
+%   {%
+%     \mytitleshape
+%     \mytitlefamily
+%     \contentslabel{15pt}
+%   }
+%   {\hspace*{0pt}}
+%   {\titlerule*[\mydotsspacing]{.}\contentspage}
+%
+% \titlecontents{subsubsection}
+%   [55pt]
+%   {}
+%   {%
+%     \mytitlefamily
+%     \contentslabel{15pt}
+%   }
+%   {\hspace*{0pt}}
+%   {\titlerule*[\mydotsspacing]{.}\contentspage}
+
+%--------------------------------------------------------------
+% definitions
+
+% colors
+\definecolor{light-gray}{gray}{0.5}
+\definecolor{normalgray}{gray}{0.3}
+\definecolor{displaygray}{gray}{0.1}
+\colorlet{diffcolor}{black!20!blue!65!green}
+\colorlet{titlecolor}{blue!60!green}
+
+% in-text waffles
+\newcommand{\keyword}[1]{\textsl{\textsf{\textbf{#1}}}}
+\newcommand{\mctheoremstyle}{\bfseries}
+\newcommand{\uptotoc}[1][toc:toc]{\hyperref[#1]{$\uparrow$ Back to top}}
+\newcommand{\keyref}[2]{\hyperref[#2]{\textbf{\textit{#1}}}}
+\newcommand{\tacaption}{\captionsetup[figure]{labelfont={it,footnotesize,color=normalgray},textfont={it,footnotesize,color=normalgray}}}
+\newcommand{\tafootnote}{\renewcommand\footnotelayout{\color{normalgray}}}
+
+\newcommand{\smiley}{\tikz[baseline=-0.75ex,black]{%
+    \draw circle (4mm);
+\node[fill,circle,inner sep=1.0pt] (left eye) at (135:1.8mm) {};
+\node[fill,circle,inner sep=1.0pt] (right eye) at (45:1.8mm) {};
+\draw (-145:2.5mm) arc (-120:-60:4.5mm);
+    }
+}
+
+\newcommand{\sadness}{\tikz[baseline=-0.75ex,black]{%
+    \draw circle (4mm);
+\node[fill,circle,inner sep=1.0pt] (left eye) at (135:1.8mm) {};
+\node[fill,circle,inner sep=1.0pt] (right eye) at (45:1.8mm) {};
+\draw[rotate=180] (-215:3.0mm) arc (-120:-60:4.5mm);
+    }
+}
+
+%--------------------------------------------------------------
+% this package options
+
+% Section numbering style
+\renewcommand\thesection{\arabic{section}:}
+\renewcommand\thesection{\Roman{section}:}
+\renewcommand\thesubsection{\arabic{subsection}.}
+\renewcommand\thesubsubsection{\arabic{subsection}.\arabic{subsubsection}.}
+
+% Section style
+\newcommand\sectionstyle{\LARGE\titlesfamily\color{displaygray}}
+\newcommand\subsectionstyle{\Large\bfseries\titlesfamily\color{displaygray}}
+\newcommand\subsubsectionstyle{\bfseries\titlesfamily\color{displaygray}}
+
+% Section before style
+\newcommand\sectiontype{Summary \thesection\ }
+\newcommand\subsectiontype{\thesubsection\ }
+\newcommand\subsubsectiontype{\thesubsubsection\ }
+\newcommand\sectionstuffsbefore{\setcounter{equation}{0}}
+\newcommand\sectionstuffsafter{\vspace{36pt}} %\startcontents}
+%\newcommand\sectionstuffsafter{\vspace{36pt} \startcontents}
+
+% Author
+\newcommand\mcauthor{Mauricio C\'aceres}
+\newcommand\mcinstitution{Columbia University}
+\newcommand\mcclasslong{Topics in Trade and Development}
+\newcommand\mcclassshort{Topics Trade}
+\newcommand\mcclasscode{ECONG6226}
+\newcommand\mcyear{2015}
+\newcommand\mcsemester{Spring}
+\newcommand\mcdate{\date{}}
+\newcommand\mctitle{Notes}
+\newcommand\mcemail{mauricio.caceres@columbia.edu}
+\newcommand\mccustomll{Notes}
+\newcommand\mccustomlr{Notes}
+
+% font styles
+\newcommand\titlesfamily{}%{\sffamily}
+\newcommand{\displayoptions}{
+  \setlength{\abovedisplayskip}{0.25cm} % Space before math
+  \setlength{\belowdisplayskip}{0.15cm} % Space after math
+  \color{displaygray}
+}
+%\newcommand\displayoptions{}%\fontsize{11pt}{12pt}\selectfont
+
+%--------------------------------------------------------------
+% package options
+
+\DeclareOption{summary}{
+  \lhead{\color{light-gray} \mccustomll\ -- \mccustomlr}
+  \mcfont\mcends
+}
+
+\DeclareOption{homework}{
+  \renewcommand\sectiontype{Problem \thesection\ }
+  \renewcommand\sectionstyle{\Large\bfseries\titlesfamily\color{titlecolor}}
+  \renewcommand\subsectionstyle{\bfseries\titlesfamily\color{displaygray}}
+  \renewcommand\subsubsectionstyle{\bfseries\titlesfamily\color{displaygray}}
+
+  \renewcommand\thesection{\arabic{section}:}
+  \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}}
+  \renewcommand\thesubsubsection{\alph{subsubsection}.}
+
+  \lhead{\color{light-gray} \mcsemester\ \mcyear\ -- \mcclassshort\ \mccustomlr}
+  \mcfont\mcends
+}
+
+\DeclareOption{recitation}{
+  \renewcommand\sectiontype{Recitation \thesection\ }
+  \renewcommand\sectionstuffsafter{\vspace{36pt} \startcontents}
+  \lhead{\color{light-gray} \mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \leftmark\ \mcdate}
+
+  \setcounter{tocdepth}{2}
+  \titlecontents{subsection}
+  [0.75cm]
+  {}
+  {%
+    \titlesfamily
+    \contentslabel{0.3cm}
+  }
+  {\hspace*{0pt}}
+  {\titlerule*[7pt]{.}\contentspage}
+  \mcfont\mcends
+}
+
+\DeclareOption{classnotes}{
+  \renewcommand\sectiontype{Lecture \thesection\ }
+  \lhead{\color{light-gray} \mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \mcdate}
+  \mcfont\mcends
+}
+
+\DeclareOption{mcpaper}{
+  \renewcommand\sectiontype{\thesection\ }
+  \renewcommand\thesection{\arabic{section}.}
+  \renewcommand\thesubsection{\Alph{subsection}.}
+  \renewcommand\thesubsubsection{\Alph{subsection}.\arabic{subsubsection}.}
+  %\fontfamily{ppl}\selectfont
+  \renewcommand{\displayoptions}{
+    \setlength{\abovedisplayskip}{0.15cm} % Space before math
+    \setlength{\belowdisplayskip}{0.15cm} % Space after math
+    %\fontsize{12pt}{12pt}\selectfont
+    \color{displaygray}
+    \maketitle
+  }
+
+  \renewcommand\titlesfamily{}
+  \renewcommand\sectionstyle{\large\bfseries\titlesfamily\color{displaygray}}
+  \renewcommand\subsectionstyle{\normalsize\itshape\titlesfamily\color{displaygray}}
+  \renewcommand\subsubsectionstyle{\normalsize\titlesfamily\color{displaygray}}
+
+  \renewcommand\sectiontype{\thesection\ }
+  \renewcommand\subsectiontype{\thesubsection\ }
+  \renewcommand\subsubsectiontype{\thesubsubsection\ }
+  \renewcommand\sectionstuffsbefore{}
+  \renewcommand\sectionstuffsafter{}
+
+  \pagestyle{plain}
+  \pagenumbering{arabic}
+  \titleformat{\section}{
+    \sectionstyle
+    \sectionstuffsbefore
+  }{\sectiontype #1}{0pt}{\sectionstuffsafter}
+}
+
+\DeclareOption{fancypaperalt}{
+  \ExecuteOptions{mcpaper}
+  \mcfont\mcends
+}
+
+\DeclareOption{fancypaper}{
+  \ExecuteOptions{mcpaper}
+  \DeclareSymbolFont{operators}     {OT1}{ppl}{m}{n}
+  \SetSymbolFont{operators}{bold}   {OT1}{ppl}{b}{n}
+  \DeclareMathAlphabet{\mathit}     {OT1}{ppl}{m}{it}
+  \SetMathAlphabet{\mathit}{bold}   {OT1}{ppl}{b}{it}
+  \DeclareSymbolFont{upright}       {OT1}{zplm}{m}{n}
+  \DeclareSymbolFont{letters}       {OML}{zplm}{m}{it}
+  \DeclareSymbolFont{symbols}       {OMS}{zplm}{m}{n}
+  \DeclareSymbolFont{largesymbols}  {OMX}{zplm}{m}{n}
+  \SetSymbolFont{upright}{bold}     {OT1}{zplm}{b}{n}
+  \SetSymbolFont{letters}{bold}     {OML}{zplm}{b}{it}
+  \SetSymbolFont{symbols}{bold}     {OMS}{zplm}{b}{n}
+  \SetSymbolFont{largesymbols}{bold}{OMX}{zplm}{m}{n}
+  \DeclareMathAlphabet{\mathbf}     {OT1}{zplm}{b}{n}
+  \DeclareMathAlphabet{\mathbold}   {OML}{zplm}{b}{it}
+  \DeclareSymbolFontAlphabet{\mathrm}    {operators}
+  \DeclareSymbolFontAlphabet{\mathnormal}{letters}
+  \DeclareSymbolFontAlphabet{\mathcal}   {symbols}
+
+  \DeclareMathDelimiter{(}{\mathopen} {upright}{"28}{largesymbols}{"00}
+  \DeclareMathDelimiter{)}{\mathclose}{upright}{"29}{largesymbols}{"01}
+  \DeclareMathDelimiter{[}{\mathopen} {upright}{"5B}{largesymbols}{"02}
+  \DeclareMathDelimiter{]}{\mathclose}{upright}{"5D}{largesymbols}{"03}
+  \DeclareMathDelimiter{/}{\mathord}{upright}{"2F}{largesymbols}{"0E}
+
+  \DeclareMathSymbol{\Gamma}  {\mathalpha}{letters}{"00}
+  \DeclareMathSymbol{\Delta}  {\mathalpha}{letters}{"01}
+  \DeclareMathSymbol{\Theta}  {\mathalpha}{letters}{"02}
+  \DeclareMathSymbol{\Lambda} {\mathalpha}{letters}{"03}
+  \DeclareMathSymbol{\Xi}     {\mathalpha}{letters}{"04}
+  \DeclareMathSymbol{\Pi}     {\mathalpha}{letters}{"05}
+  \DeclareMathSymbol{\Sigma}  {\mathalpha}{letters}{"06}
+  \DeclareMathSymbol{\Upsilon}{\mathalpha}{letters}{"07}
+  \DeclareMathSymbol{\Phi}    {\mathalpha}{letters}{"08}
+  \DeclareMathSymbol{\Psi}    {\mathalpha}{letters}{"09}
+  \DeclareMathSymbol{\Omega}  {\mathalpha}{letters}{"0A}
+
+  \def\defaultscriptratio{.76}
+  \def\defaultscriptscriptratio{.6}
+  \DeclareMathSizes{5}    {5}    {5}    {5}
+  \DeclareMathSizes{6}    {6}    {5}    {5}
+  \DeclareMathSizes{7}    {7}    {5}    {5}
+  \DeclareMathSizes{8}    {8}    {6}    {5}
+  \DeclareMathSizes{9}    {9}    {7}    {5}
+  \DeclareMathSizes{10}   {10}   {7.6}  {6}
+  \DeclareMathSizes{10.95}{10.95}{8}    {6}
+  \DeclareMathSizes{12}   {12}   {9}    {7}
+  \DeclareMathSizes{14.4} {14.4} {10}   {8}
+  \DeclareMathSizes{17.28}{17.28}{12}   {10}
+  \DeclareMathSizes{20.74}{20.74}{14.4} {12}
+  \DeclareMathSizes{24.88}{24.88}{20.74}{14.4}
+
+  \renewcommand{\rmdefault}{ppl}
+  \renewcommand{\familydefault}{\rmdefault}
+  %\fontfamily{ppl}\selectfont
+  \mcends
+}
+
+\DeclareOption{normalpaper}{
+  \ExecuteOptions{mcpaper}
+  \renewcommand{\rmdefault}{cmr}
+  \renewcommand{\familydefault}{\rmdefault}
+  %\fontfamily{cmm}\selectfont
+  \mcends
+}
+
+%\ExecuteOptions{summary}
+\ProcessOptions\relax
+
+%--------------------------------------------------------------
+\endinput

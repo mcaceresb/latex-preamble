@@ -1,0 +1,64 @@
+%----------------------------------------------------------------------
+% standard heading
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mcbeamerpreamble}
+\RequirePackage[l2tabu, orthodox]{nag}
+
+%--------------------------------------------------------------
+% packages
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{environ}
+\usepackage{booktabs}
+\usepackage{lmodern}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{beamerinnerthemecircles, beamerouterthemeshadow}
+
+%----------------------------------------------------------------------
+% beaker options
+
+\usetheme{Frankfurt}
+\usecolortheme{beaver}
+
+\setbeamerfont{page number in head/foot}{size=\footnotesize}
+\setbeamertemplate{footline}[frame number]
+\beamertemplatenavigationsymbolsempty{}
+
+%--------------------------------------------------------------
+% packages
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+
+\allowdisplaybreaks{}
+\newcommand\indep{\perp\!\!\!\perp}
+\DeclareMathOperator*{\argmin}{arg\!\min}
+\DeclareMathOperator*{\argmax}{arg\!\max}
+\newcommand{\keyword}[1]{\textit{\textbf{#1}}}
+
+% HideLevel environment
+\newcommand\SetHideLevel{1pt}
+\NewEnviron{hidelevel}[1]{%
+  \newdimen\level\level=#1pt
+  \ifdim\level<\SetHideLevel
+    \BODY
+  \else
+  \fi
+}
+
+%--------------------------------------------------------------
+% package options
+
+\DeclareOption{summary}{
+}
+
+\ExecuteOptions{summary}
+\ProcessOptions\relax
+
+%--------------------------------------------------------------
+\endinput

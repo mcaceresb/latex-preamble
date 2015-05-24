@@ -1,0 +1,316 @@
+%--------------------------------------------------------------
+%\documentclass[handout]{beamer}
+\documentclass{beamer}
+
+\usepackage{mcbeamerpreamble}
+
+\title[State-Dependent Multipliers]{Government Spending Multipliers in Good Times and in Bad: Evidence from U.S. Historical Data \\ Valerie A. Ramey and Sarah Zubairy (2014)}
+\author[C\'aceres]{Mauricio C\'aceres}
+%\institute[Columbia Econ]{Department of Economics \ Columbia University}
+
+%--------------------------------------------------------------
+\begin{document}
+
+\maketitle % \frame{\tableofcontents}
+%\pagestyle{empty}
+
+\section{Review}
+\label{sec:review}
+
+%--------------------------------------------------------------
+\begin{frame}{Motivation}
+Are fiscal multiplies state-dependent?
+\begin{enumerate}
+  \item Multipliers are estimated to be modest (typically $0.6$ to $1$) but textbook models predict multipliers are lager during recessions or at the ZLB.
+
+  \item There is a recent and growing literature examining whether fiscal multipliers are larger in periods of slack. Several papers find that multipliers are lower than one, often close to $0$, during expansions, and greater than $1$, sometimes as high as $2$ or $3$, for periods of slack.
+
+  \item Fewer papers look at whether multipliers are larger at the ZLB, but there is also some evidence to that effect.
+\end{enumerate}
+
+This paper, however, finds little evidence that multipliers are larger during periods of slack of at the ZLB.
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Specification}
+This paper stands out in the literature because
+\begin{enumerate}
+  \item The literature typically uses VARs. They use local linear projections following Jorda (2005).
+    \begin{itemize}
+      \item Estimating state-dependent systems is straightforward using Jorda's method. Using VARs is not trivial and fraught with complications.
+
+      \item Auerbach and Gorodnichenko (2012), however, estimate a state-dependent STVAR model using Bayesian methods (MCMC) and find multipliers are larger during recessions. Auerbach and Gorodnichenko (2013) also find such evidence this time using Jorda's method.
+
+      \item RZ devote a lot of time into explaining these differences.
+    \end{itemize}
+\end{enumerate}
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Specification}
+  \begin{enumerate}
+    \setcounter{enumi}{1}
+      \item Another issue arises when the multiplier is estimated using impulse responses.
+      \begin{itemize}
+        \item Many follow Blanchard and Perotti (2002) in estimating the multiplier as the peak response of $Y$ to a unit-shock to $G$. Others compute the average IRF.
+
+        \item RZ argue that it is more appropriate to compare the \textit{integral} of the IR of $Y$ to the integral of the IR of $G$ because this way we measure the cumulative response of GDP to cumulative increases in $G$.
+
+        \item Here they emphasize that computing the response $(z_{t + h} - z_{t - 1}) / Y_{t - 1}$ for $z = \{Y_t, G_t\}$ can be done directly using linear projections.
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Specification}
+  \begin{enumerate}
+    \setcounter{enumi}{2}
+    \item Often the literature estimates an \textit{elasticity} (variables in logs) and converts it to a multiplier by multiplying by average GDP to government spending ratio for their sample, $Y / G$.
+      \begin{itemize}
+        \item RZ argue this can result is heavily biased multipliers.
+
+        \item They estimate the multiplier directly as their variables are $\Delta Y_t / Y_{t - 1}$ and $\Delta G_t / Y_{t - 1}$.
+      \end{itemize}
+  \end{enumerate}
+
+  The specification for $I_{t - 1}$ a dummy for a period of slack, is
+  \begin{align*}
+    z_{t + h}
+    & = I_{t - 1} \left[
+      \alpha_{Ah}
+      + \psi_{Ah}(L) y_{t - 1}
+      + \beta_{Ah} \dfrac{shock_t}{Y_{t - 1}}
+    \right] \\
+    & \quad
+    + (1 - I_{t - 1}) \left[
+      \alpha_{Bh}
+      + \psi_{Bh}(L) y_{t - 1}
+      + \beta_{Bh} \dfrac{shock_t}{Y_{t - 1}}
+    \right] \\
+    & \quad
+    + \textit{quartic trend}
+    + \varepsilon_t
+  \end{align*}
+
+  For a state $k = \{A, B\}$, the multiplier is
+  \[
+    Multiplier_H^k
+    = \dfrac{\sum^{H}_{h = 1} \beta_{k, h}^Y}{\sum^{H}_{h = 1} \beta_{k, h}^G}
+  \]
+
+  %and compare for $k = A, B$.
+\end{frame}
+
+%--------------------------------------------------------------
+\section{Commentary}
+\label{sec:commentary}
+
+%--------------------------------------------------------------
+\begin{frame}{Relation to ORZ (2013)}
+  Ramey and Zubairy (2014) is closely related to Owyang, Ramey, Zubairy (2013), who use nearly the same sample period to answer whether the fiscal multiplier is greater in periods of slack. The differences seem to be:
+  \begin{enumerate}
+    \item More extensive robustness checks.
+
+    \item A discussion of why the results differ from AG (2012, 2013).
+
+    \item Analysis of ZLB.
+
+    \item Additional years of data (up to 2013 instead of 2010).
+  \end{enumerate}
+
+  Otherwise they appear identical (also use unemployment as measure of slack and the news variable in Ramey's 2011 as shock). AZ (2014) reach the same conclusion as ORZ (2013) for the US. We use the data-set from the latter paper, which is readily available.
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Compared to Auerbach and Gorodnichenko}
+  The following summarizes the differences in estimates.
+  \begin{center}
+    \small
+    \begin{tabular}{lll ll}
+      \toprule
+      Authors
+      & Data
+      & Method
+      %& Shock
+      & Recession
+      & Expansion \\\midrule
+
+      RZ (2014)
+      & US
+      & Jorda. Direct. % $F(z_{i, t}) = $ prob. of recession.
+      %& Shocks are fiscal stimulus in all other countries, without own spending.
+      & $0.69$ to $0.76$
+      & $0.76$ to $0.96$ \\
+
+      AG (2013)
+      & OECD %panel %, quarterly, 1985 to 2012
+      & Jorda. Direct. % $F(z_{i, t}) = $ prob. of recession.
+      %& Shocks are fiscal stimulus in all other countries, without own spending.
+      & $3.27$ to $6.69$
+      & $-2.59$ to $1.20$ \\
+
+      AG (2012)
+      & US %, quarterly, 1947 to 2008.
+      & STVAR. Elasticity. % BP for identification. % $F(z_{i, t}) =$ prob. recession. % Controls for predictable changes using professional forecasts.
+      %& \$1 increase in G.
+      & $1$ to $1.5$ % (robust) %; $2.24$ baseline.
+      & $0$ to $0.5$ % (robust) %; $0.57$ baseline.
+      \\
+
+      AG (2011)
+      & OECD %panel %, semi-annual, 1985 to 2012
+      & Jorda. Elasticity. % $F(z_{i, t}) = $ prob. of recession.
+      %& Shocks are innovations in $G$
+      & $0.49 \to 2.36$
+      & $-0.19 \to -1.024$ \\
+
+      AG (2014)
+      & Japan %, quarterly, 1960 to 2012.
+      & Jorda. Elasticity.
+      %& Shock is a percent shock to $G$
+      & $2.52$ to $2.80$.
+      & Imprecise \\ %($-4.7$ to $16.31$) \\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+% AG 2012 AEJ:EP
+% Tagkalakis (2008) - Panel of OECD countries.
+% Hall (2009) - survey?
+% Pereira and Lopes (2010) - VAR with time-varying coefficients, which are assumed to follow uncorrelated RW. Beyesian.
+% Romer and Bernstein (2009)
+% Congressional Budget Office (2009)
+%
+% AG 2011 WP
+% Shoag (2011) reports 3.0 to 3.5 for slack and 1.5 for no slack. State-level variation.
+% Wieland (2011) has a paper for the empirical ZLB multiplier (upper bound of about 1.5, much smaller than the theoretical ones suggested in the literature by Woodford (2011) or Christiano et al. (2011)).
+%
+% IMF (ones I might be missing)
+% Batini and others (2012), 4 quarters
+% Canzoneri and others, 2012, DSGE, United States, impact multiplier
+% Hernandez de Cos and Moral-Benito (2013), Spain, 4 quarters
+%
+% AZ 2014
+% Fazzari et al. (2013)
+% Riera-Crichton et al. (2014)
+% Baum et al. (2012) (4 quarters?)
+% Bachman and Sims (2012) (reports 0 for expansions and 3 for recessions. (Consumer confidence response to gov shocks?)?)
+
+%--------------------------------------------------------------
+\begin{frame}{Robustness to WWII - Ramey's news variable vs Random Noise}
+  RZ claim their results are robust to WWII. However, this is an odd claim. Ramey's news variable has little explanatory power if this is excluded, especially for the economy in periods of slack. In fact, it is as good as random noise in predicting government expenditures for periods of slack outside of WWII.
+  \begin{figure}[ht!]
+    \centering
+    %\includegraphics[width=\linewidth]{wwiirobustness_explanatory}
+    \label{fig:wwiirobustness_explanatory}
+  \end{figure}
+  %However, we do note that for the recession multiplier, the estimation with Ramey's variable and with random noise get \textit{closer} over tie. Ramey's variable was supposed to improve over longer horizons!
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Robustness to WWII - Ramey's news variable vs Random Noise}
+  This should not be surprising. The authors themselves note a similar irregularity, and Ramey (2011) actually shows that her news variable has little explanatory power for the period 1955:Q1 onward ($F$-statistic close to $0$ compared to one well-above $10$ including data back to 1939:Q1).
+  \begin{figure}[ht!]
+    \centering
+    %\includegraphics[width=\linewidth]{wwiirobustness_fstat}
+    \label{fig:wwiirobustness_fstat}
+  \end{figure}
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Robustness to WWII - Excluding WWII}
+  I cannot replicate their claim that their estimates are robust to excluding WWII, or to excluding rationing years within WWII. I try both the historical WWII dates and 1939 to 1947. Clearly the following shows that the estimates are sensitive to excluding WWII.
+  \begin{figure}[ht!]
+    \centering
+    %\includegraphics[width=\linewidth]{wwiirobustness_exclusion}
+    \label{fig:wwiirobustness_excluson}
+  \end{figure}
+
+  Both the recession and expansion estimates increase, though the former much more dramatically.
+  %By contrast, excluding the post WWII but pre 1955 period (the Korean war, another large event) does not substantially alter the results.
+  % picture 2
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Robustness to WWII - Explanation}
+  This jump is not so surprising when we look at the time series
+  \begin{figure}[ht!]
+    \centering
+    %\includegraphics[width=\linewidth]{wwiirobustness_why}
+    \label{fig:wwiirobustness_why}
+  \end{figure}
+
+  The biggest increase in governemnt expenditures occurs right when unemployment goes below their recession threshold.
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Robustness to WWII - Restricted Samples}
+  If the authors restrict their sample from 1947 to the present, and their estimates become very imprecise. Note, however, that thee estimate for the period \textit{up to} $1947$ do not change so dramatically.
+  \begin{figure}[ht!]
+    \centering
+    %\includegraphics[width=\linewidth]{wwiirobustness_1947}
+    \label{fig:wwiirobustness_1947}
+  \end{figure}
+\end{frame}
+
+%--------------------------------------------------------------
+\begin{frame}{Robustness to WWII - Restricted Samples}
+  The same occurs if the sample is restricted to 1955 to the latest date (excluding the Korean war in addition). The difference is even more striking.
+  %While this might not be so surprising, given these are very large events, in both cases the estimates of the multiplier for the rest of the period (i.e. data prior to 1947 or prior to 1955) do not change too dramatically from the baseline, while the estimates for the restricted period vary considerably.
+  \begin{figure}[ht!]
+    \centering
+    %\includegraphics[width=\linewidth]{wwiirobustness_1955}
+    \label{fig:wwiirobustness_1955}
+  \end{figure}
+\end{frame}
+
+% %--------------------------------------------------------------
+% \begin{frame}{Other issues}
+%   \begin{enumerate}
+%     \item ORZ (2013) normalize their news variable by nominal GDP, but use real per-capita variables for the specification.
+%
+%     \item It is standard in this literature to use more recent years. Can we think of 1960-present as the same as the period before?
+%   \end{enumerate}
+% \end{frame}
+
+% %--------------------------------------------------------------
+% \begin{frame}{Other issues - Normalization}
+%   ORZ (2013) normalize their news variable by nominal GDP, but use real per-capita variables for the specification.
+%   % pictures?
+% \end{frame}
+%
+%
+% %--------------------------------------------------------------
+% \begin{frame}{Other issues - Measures of Slack}
+%   AG (2011) remarks that commonly used variables such as unemployment rate or potential output is a lagged measure. Alternatives: detrended unemployment rate or detrended change in unemployment, using HP filter with $\lambda = 10,000$.
+% \end{frame}
+%
+% %--------------------------------------------------------------
+% \begin{frame}{Other issues - Structural Changes}
+%   It is standard in this literature to use more recent years. Can we think of 1960-present as the same as the period before?
+%   % government spending picture as a fraction of GDP. Volatility also seems to have decreased.
+% \end{frame}
+
+%--------------------------------------------------------------
+\section{Conclusion}
+\label{sec:conclusion}
+
+%--------------------------------------------------------------
+\begin{frame}{Conclusion}
+  RZ contribute to the literature estimating state-dependent multipliers. In contrast to prior work, they find that fiscal multipliers do not differ across states, for both recessions in contrast to expansions and for the interest rate near the ZLB or near a Taylor rule.
+  \begin{enumerate}
+    \item The estimates are mainly driven by WWII, and perhaps Korea.
+
+    \item They do note the long-time series allows them to account for such events, but perhaps the period pre and post this major historical event can be thought of as different periods.
+
+    \item There is also potentially an issue with Ramey's news variable, in that it has very low predictive power outside WWII (at best it has predictive power for 1939 to 1955).
+
+    \item One approach might be to estimate a time-varying multiplier directly, or to allow for time-breaks in their estimation given they such a long series.
+  \end{enumerate}
+\end{frame}
+
+%--------------------------------------------------------------
+
+
+%--------------------------------------------------------------
+\end{document}
