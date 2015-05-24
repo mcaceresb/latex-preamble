@@ -1,9 +1,13 @@
 %--------------------------------------------------------------
 % TODO: Figure out theorems and other math environments
-% TODO(mauricio): XeLaTeX math font    // Sun 24 May 2015 11:32:42 AM EDT
-% TODO(mauricio): setlist options      // Sun 24 May 2015 11:33:01 AM EDT
-% TODO(mauricio): ToC default          // Sun 24 May 2015 11:33:01 AM EDT
-% TODO(mauricio): references (natbib?) // Sun 24 May 2015 11:33:08 AM EDT
+% TODO(mauricio): XeLaTeX math font       // Sun 24 May 2015 11:32:42 AM EDT
+% TODO(mauricio): setlist options         // Sun 24 May 2015 11:33:01 AM EDT
+% TODO(mauricio): ToC default             // Sun 24 May 2015 11:33:01 AM EDT
+% TODO(mauricio): references (natbib?)    // Sun 24 May 2015 11:33:08 AM EDT
+% TODO(mauricio): check lstlistings works // Sun 24 May 2015 12:48:23 PM EDT
+% TODO(mauricio): check mcpaper by itself // Sun 24 May 2015 01:14:42 PM EDT 
+% TODO(mauricio): remove dot/ddot and figure out of that fixes mathpazo
+%                                         // Sun 24 May 2015 01:52:57 PM EDT 
 
 %--------------------------------------------------------------
 % standard heading
@@ -376,7 +380,7 @@
 
 % Author
 \newcommand\mcauthor{Mauricio C\'aceres}
-\newcommand\mcinstitution{Columbia University}
+\newcommand\mcinstitution{University}
 \newcommand\mcclasslong{Topics in Trade and Development}
 \newcommand\mcclassshort{Topics Trade}
 \newcommand\mcclasscode{ECONG6226}
@@ -385,8 +389,10 @@
 \newcommand\mcdate{\date{}}
 \newcommand\mctitle{Notes}
 \newcommand\mcemail{mauricio.caceres@columbia.edu}
-\newcommand\mccustomll{Notes}
-\newcommand\mccustomlr{Notes}
+\newcommand\mccustomll{Summary}
+\newcommand\mccustomlr{Topic}
+\newcommand\mctasession{F 1:30pm-2:30pm}
+\newcommand\mctaofficeh{H 12:00pm-1:30pm}
 
 % font styles
 \newcommand\titlesfamily{}%{\sffamily}
@@ -400,11 +406,13 @@
 %--------------------------------------------------------------
 % package options
 
+% Spartan option. Basic header.
 \DeclareOption{summary}{
   \lhead{\color{light-gray} \mccustomll\ -- \mccustomlr}
   \mcfont\mcends
 }
 
+% Homework default template.
 \DeclareOption{homework}{
   \renewcommand\sectiontype{Problem \thesection\ }
   \renewcommand\sectionstyle{\Large\bfseries\titlesfamily\color{titlecolor}}
@@ -419,6 +427,7 @@
   \mcfont\mcends
 }
 
+% Recitation default template.
 \DeclareOption{recitation}{
   \renewcommand\sectiontype{Recitation \thesection\ }
   \renewcommand\sectionstuffsafter{\vspace{36pt} \startcontents}
@@ -437,12 +446,14 @@
   \mcfont\mcends
 }
 
+% Class notes default template.
 \DeclareOption{classnotes}{
   \renewcommand\sectiontype{Lecture \thesection\ }
   \lhead{\color{light-gray} \mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \mcdate}
   \mcfont\mcends
 }
 
+% Preprocessing for switching to article mode
 \DeclareOption{mcpaper}{
   \renewcommand\sectiontype{\thesection\ }
   \renewcommand\thesection{\arabic{section}.}
@@ -476,11 +487,13 @@
   }{\sectiontype #1}{0pt}{\sectionstuffsafter}
 }
 
+% Use font and math from mcfont
 \DeclareOption{fancypaperalt}{
   \ExecuteOptions{mcpaper}
   \mcfont\mcends
 }
 
+% Use Palatino font and math
 \DeclareOption{fancypaper}{
   \ExecuteOptions{mcpaper}
   \DeclareSymbolFont{operators}     {OT1}{ppl}{m}{n}
@@ -540,6 +553,7 @@
   \mcends
 }
 
+% Use computer modern font and default math
 \DeclareOption{normalpaper}{
   \ExecuteOptions{mcpaper}
   \renewcommand{\rmdefault}{cmr}
