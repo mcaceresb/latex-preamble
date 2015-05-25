@@ -5,9 +5,11 @@
 % TODO(mauricio): ToC default             // Sun 24 May 2015 11:33:01 AM EDT
 % TODO(mauricio): references (natbib?)    // Sun 24 May 2015 11:33:08 AM EDT
 % TODO(mauricio): check lstlistings works // Sun 24 May 2015 12:48:23 PM EDT
-% TODO(mauricio): check mcpaper by itself // Sun 24 May 2015 01:14:42 PM EDT 
+% TODO(mauricio): check mcpaper by itself // Sun 24 May 2015 01:14:42 PM EDT
 % TODO(mauricio): remove dot/ddot and figure out of that fixes mathpazo
-%                                         // Sun 24 May 2015 01:52:57 PM EDT 
+%                                         // Sun 24 May 2015 01:52:57 PM EDT
+% TODO(mauricio): Cross-check mathpple and mathpazo as per nag 
+%                                         // Sun 24 May 2015 07:19:15 PM EDT
 
 %--------------------------------------------------------------
 % standard heading
@@ -56,14 +58,14 @@
 \usepackage{footmisc}  % footer
 
 % awesome add-ons
-\usepackage{hyperref}  % references
 \usepackage{pgfplots}  % awesome plotting
 \usepackage{tikz}      % vector graphics!
 
 % Referencing
 \usepackage[longnamesfirst]{natbib} % lots of cites
-\usepackage{cleveref}  % semantic figure ref
-\usepackage{varioref}  % ref pages
+\usepackage{hyperref} % references
+\usepackage[nameinlink,noabbrev]{cleveref} % semantic figure ref
+%\usepackage{varioref} % ref pages
 
 %--------------------------------------------------------------
 % fonts
@@ -469,9 +471,9 @@
   }
 
   \renewcommand\titlesfamily{}
-  \renewcommand\sectionstyle{\large\bfseries\titlesfamily\color{displaygray}}
+  \renewcommand\sectionstyle{\Large\bfseries\titlesfamily\color{displaygray}}
   \renewcommand\subsectionstyle{\normalsize\itshape\titlesfamily\color{displaygray}}
-  \renewcommand\subsubsectionstyle{\normalsize\titlesfamily\color{displaygray}}
+  \renewcommand\subsubsectionstyle{\normalsize\bfseries\titlesfamily\color{displaygray}}
 
   \renewcommand\sectiontype{\thesection\ }
   \renewcommand\subsectiontype{\thesubsection\ }
