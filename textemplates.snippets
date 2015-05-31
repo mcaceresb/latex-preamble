@@ -146,9 +146,9 @@ endsnippet
 # Article template
 snippet article "Document temmplate for various 'paper' options" b
 %----------------------------------------------------------------------
-\documentclass[${1:11pt}]{article}
+\documentclass[${2:11pt}]{article}
 
-\usepackage[$2`!p snip.rv=complete(t[1], ['mcpaper', 'normalpaper', 'fancypaper', 'fancypaperalt'])`]{${3:mcpreamble}}
+\usepackage[$1`!p snip.rv=complete(t[1], ['mcpaper', 'normalpaper', 'fancypaper', 'fancypaperalt'])`]{${3:mcpreamble}}
 \title{${4:Snarky Title}}
 \author{${5:Mauricio C\'aceres}}
 %\date{}

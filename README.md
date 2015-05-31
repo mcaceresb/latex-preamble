@@ -97,7 +97,7 @@ Most options use the `quattrocento` font with `mathpple` math and show the autho
     * Pre-section text is `Lecture #:`
     * Left header is `\mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \mcdate`
     * The snippet defines the date to be today.
-* `mcpaper` are options to go from my custom LaTeX format to a more standard format for writing serious academic papers.
+* `mcpaper` are options to go from my custom LaTeX format to a more standard format for writing serious stuff.
     * Title, author, and date are typeset using LaTeX's `\maketitle`
     * No fancy header. We use `\pagestyle{plain}`
     * Titles are understated and go back to `#. Section`
@@ -115,10 +115,10 @@ The following options are identical to `mcpaper` but use a particular font. Why 
 * Set up a default ToC style.
 * Figure out how to use references (with natbib?) and default citation style.
 * Check that lstlistings works as expected.
-* Check whether `mcpaper` by itself is the same as `normalpaper`
-* Remove `dot` and `ddot` and see if that allows me to just use `palatino` directly.
+* Decide if using `dot` and `ddot` is worth the extra font hassle.
+* Figure out beamer styles.
+* Delete "paper" options and add a font selection to snippet instead.
 
 ## Copyright and License
 
 Choose a license. Recall the `\smiley` and `\sadness` code you got online.
-

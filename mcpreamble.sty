@@ -5,11 +5,10 @@
 % TODO(mauricio): ToC default             // Sun 24 May 2015 11:33:01 AM EDT
 % TODO(mauricio): references (natbib?)    // Sun 24 May 2015 11:33:08 AM EDT
 % TODO(mauricio): check lstlistings works // Sun 24 May 2015 12:48:23 PM EDT
-% TODO(mauricio): check mcpaper by itself // Sun 24 May 2015 01:14:42 PM EDT
-% TODO(mauricio): remove dot/ddot and figure out of that fixes mathpazo
+% TODO(mauricio): decide if dot/ddot is worth extra font hassle
 %                                         // Sun 24 May 2015 01:52:57 PM EDT
-% TODO(mauricio): Cross-check mathpple and mathpazo as per nag 
-%                                         // Sun 24 May 2015 07:19:15 PM EDT
+% TODO(mauricio): delete "paper" options; add a font selection to snippet
+%                                         // Sun 31 May 2015 10:20:14 AM EDT 
 
 %--------------------------------------------------------------
 % standard heading
@@ -70,8 +69,8 @@
 %--------------------------------------------------------------
 % fonts
 
-\def\mcends{\AtEndOfPackage{\usepackage{bm}\usepackage[italic]{mathastext}}}
-\def\mcfont{\AtEndOfPackage{
+\newcommand\mcends{\AtEndOfPackage{\usepackage{bm}\usepackage[italic]{mathastext}}}
+\newcommand\mcfont[1][\usepackage{mathpple,quattrocento}]{\AtEndOfPackage{
   \ifxetex
     \usepackage{fontspec}
     \fontspec{Open Sans}
@@ -79,9 +78,8 @@
     %\setmathfont{Cambria Math}
   \else
     \usepackage[T1]{fontenc}
+    #1
     %\usepackage[math]{iwona}
-    \usepackage{mathpple}
-    \usepackage{quattrocento}
     %\usepackage[sfdefault]{quattrocento}
   \fi
 }}
@@ -162,7 +160,7 @@
 % general options
 
 % lengths
-\linespread{1}                        % space between lines
+\linespread{1.125}                    % space between lines
 \addtolength{\footnotesep}{3pt}       % space to the left of footnote
 \setlength{\parindent}{0pt}           % indent in first line of paragraph
 \setlength{\parskip}{9pt}             % skip between paragraphs
@@ -197,10 +195,10 @@
 \newcommand{\ind}[1]{\mathbb{I}\left\{#1\right\}}
 
 % make dot and ddot larger (i.e. more visible)
-\renewcommand{\dot}[1]{%
-  \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}}}{#1}}
-\renewcommand{\ddot}[1]{%
-  \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}\hspace{0.05ex}.}}{#1}}
+% \renewcommand{\dot}[1]{%
+%   \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}}}{#1}}
+% \renewcommand{\ddot}[1]{%
+%   \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}\hspace{0.05ex}.}}{#1}}
 
 % basic wrappers
 \newcommand{\norm}[1]{\|#1\|}
@@ -276,7 +274,7 @@
 
 \titleformat{\subsubsection}[runin]{
   \subsubsectionstyle
-}{\subsubsectiontype #1}{0pt}{}
+}{\subsubsectiontype #1.}{0pt}{}
 
 %--------------------------------------------------------------
 % fancyhdr - fancy header and footer
@@ -472,7 +470,7 @@
 
   \renewcommand\titlesfamily{}
   \renewcommand\sectionstyle{\Large\bfseries\titlesfamily\color{displaygray}}
-  \renewcommand\subsectionstyle{\normalsize\itshape\titlesfamily\color{displaygray}}
+  \renewcommand\subsectionstyle{\large\itshape\titlesfamily\color{displaygray}}
   \renewcommand\subsubsectionstyle{\normalsize\bfseries\titlesfamily\color{displaygray}}
 
   \renewcommand\sectiontype{\thesection\ }
@@ -492,75 +490,20 @@
 % Use font and math from mcfont
 \DeclareOption{fancypaperalt}{
   \ExecuteOptions{mcpaper}
-  \mcfont\mcends
+  \mcfont
+  \mcends
 }
 
 % Use Palatino font and math
 \DeclareOption{fancypaper}{
   \ExecuteOptions{mcpaper}
-  \DeclareSymbolFont{operators}     {OT1}{ppl}{m}{n}
-  \SetSymbolFont{operators}{bold}   {OT1}{ppl}{b}{n}
-  \DeclareMathAlphabet{\mathit}     {OT1}{ppl}{m}{it}
-  \SetMathAlphabet{\mathit}{bold}   {OT1}{ppl}{b}{it}
-  \DeclareSymbolFont{upright}       {OT1}{zplm}{m}{n}
-  \DeclareSymbolFont{letters}       {OML}{zplm}{m}{it}
-  \DeclareSymbolFont{symbols}       {OMS}{zplm}{m}{n}
-  \DeclareSymbolFont{largesymbols}  {OMX}{zplm}{m}{n}
-  \SetSymbolFont{upright}{bold}     {OT1}{zplm}{b}{n}
-  \SetSymbolFont{letters}{bold}     {OML}{zplm}{b}{it}
-  \SetSymbolFont{symbols}{bold}     {OMS}{zplm}{b}{n}
-  \SetSymbolFont{largesymbols}{bold}{OMX}{zplm}{m}{n}
-  \DeclareMathAlphabet{\mathbf}     {OT1}{zplm}{b}{n}
-  \DeclareMathAlphabet{\mathbold}   {OML}{zplm}{b}{it}
-  \DeclareSymbolFontAlphabet{\mathrm}    {operators}
-  \DeclareSymbolFontAlphabet{\mathnormal}{letters}
-  \DeclareSymbolFontAlphabet{\mathcal}   {symbols}
-
-  \DeclareMathDelimiter{(}{\mathopen} {upright}{"28}{largesymbols}{"00}
-  \DeclareMathDelimiter{)}{\mathclose}{upright}{"29}{largesymbols}{"01}
-  \DeclareMathDelimiter{[}{\mathopen} {upright}{"5B}{largesymbols}{"02}
-  \DeclareMathDelimiter{]}{\mathclose}{upright}{"5D}{largesymbols}{"03}
-  \DeclareMathDelimiter{/}{\mathord}{upright}{"2F}{largesymbols}{"0E}
-
-  \DeclareMathSymbol{\Gamma}  {\mathalpha}{letters}{"00}
-  \DeclareMathSymbol{\Delta}  {\mathalpha}{letters}{"01}
-  \DeclareMathSymbol{\Theta}  {\mathalpha}{letters}{"02}
-  \DeclareMathSymbol{\Lambda} {\mathalpha}{letters}{"03}
-  \DeclareMathSymbol{\Xi}     {\mathalpha}{letters}{"04}
-  \DeclareMathSymbol{\Pi}     {\mathalpha}{letters}{"05}
-  \DeclareMathSymbol{\Sigma}  {\mathalpha}{letters}{"06}
-  \DeclareMathSymbol{\Upsilon}{\mathalpha}{letters}{"07}
-  \DeclareMathSymbol{\Phi}    {\mathalpha}{letters}{"08}
-  \DeclareMathSymbol{\Psi}    {\mathalpha}{letters}{"09}
-  \DeclareMathSymbol{\Omega}  {\mathalpha}{letters}{"0A}
-
-  \def\defaultscriptratio{.76}
-  \def\defaultscriptscriptratio{.6}
-  \DeclareMathSizes{5}    {5}    {5}    {5}
-  \DeclareMathSizes{6}    {6}    {5}    {5}
-  \DeclareMathSizes{7}    {7}    {5}    {5}
-  \DeclareMathSizes{8}    {8}    {6}    {5}
-  \DeclareMathSizes{9}    {9}    {7}    {5}
-  \DeclareMathSizes{10}   {10}   {7.6}  {6}
-  \DeclareMathSizes{10.95}{10.95}{8}    {6}
-  \DeclareMathSizes{12}   {12}   {9}    {7}
-  \DeclareMathSizes{14.4} {14.4} {10}   {8}
-  \DeclareMathSizes{17.28}{17.28}{12}   {10}
-  \DeclareMathSizes{20.74}{20.74}{14.4} {12}
-  \DeclareMathSizes{24.88}{24.88}{20.74}{14.4}
-
-  \renewcommand{\rmdefault}{ppl}
-  \renewcommand{\familydefault}{\rmdefault}
-  %\fontfamily{ppl}\selectfont
+  \mcfont[\usepackage{mathpazo,palatino}]
   \mcends
 }
 
 % Use computer modern font and default math
 \DeclareOption{normalpaper}{
   \ExecuteOptions{mcpaper}
-  \renewcommand{\rmdefault}{cmr}
-  \renewcommand{\familydefault}{\rmdefault}
-  %\fontfamily{cmm}\selectfont
   \mcends
 }
 
