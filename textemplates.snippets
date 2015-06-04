@@ -24,7 +24,7 @@ def complete(t, opts):
 endglobal
 
 # Summary template
-snippet "summar(y)?(ies)?" "Document template for summary option" br
+snippet stexsummary "Template for basic summary" b
 %----------------------------------------------------------------------
 \documentclass{article}
 
@@ -50,7 +50,7 @@ $8$0
 endsnippet
 
 # Homework templates
-snippet homework "Document template for homework option" b
+snippet stexhomework "Template for homework" b
 %----------------------------------------------------------------------
 \documentclass{article}
 
@@ -75,7 +75,7 @@ $8$0
 endsnippet
 
 # Recitation template
-snippet recitation "Document template for recitation option" b
+snippet stexrecitation "Template for recitation notes" b
 %----------------------------------------------------------------------
 \documentclass{article}
 
@@ -117,7 +117,7 @@ $14$0
 endsnippet
 
 # Notes template
-snippet notes "Document template for classnotes option" b
+snippet stexnotes "Template for class notes" b
 %----------------------------------------------------------------------
 \documentclass{article}
 
@@ -144,7 +144,7 @@ $9$0
 endsnippet
 
 # Article template
-snippet article "Document temmplate for various 'paper' options" b
+snippet stexpaper "Temmplate for a paper" b
 %----------------------------------------------------------------------
 \documentclass[${2:11pt}]{article}
 
@@ -178,7 +178,7 @@ ${12:Amazing Results}$0
 endsnippet
 
 # Beamer Template
-snippet beamer "Document template for mcbeamer" b
+snippet stexbeamer "Template for beamer presentation" b
 %--------------------------------------------------------------
 %\documentclass[handout]{beamer}
 \documentclass{beamer}
@@ -210,7 +210,7 @@ $6$0
 endsnippet
 
 # merge pdf
-snippet mergepdf "Template to merge pdf's" b
+snippet stexmergepdf "Template to merge pdf's" b
 \documentclass{article}
 
 \usepackage{grffile}
@@ -225,5 +225,13 @@ snippet mergepdf "Template to merge pdf's" b
 %\includepdf{$1}
 $0
 
+\end{document}
+endsnippet
+
+# Basic document
+snippet stexdoc "Basic LaTeX document" b
+\documentclass${2:[${3:11pt}]}{$1`!p snip.rv=complete(t[1], ['article', 'beamer', 'book', 'letter', 'memoir', 'minimal', 'proc', 'report', 'slides'])`}
+\begin{document}
+$0
 \end{document}
 endsnippet
