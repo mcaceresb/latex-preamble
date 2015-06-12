@@ -2,7 +2,7 @@ global !p
 import datetime
 import time
 
-# Get the date for the next weekday
+# Get the date for the next weekday {{{1
 def next_weekday(weekday):
 	d          = datetime.date.today()              # Get today's date
 	days_delta = weekday - d.weekday()              # Difference between today and weekday you want
@@ -23,7 +23,7 @@ def complete(t, opts):
 
 endglobal
 
-# Summary template
+# Summary template {{[1
 snippet stexsummary "Template for basic summary" b
 %----------------------------------------------------------------------
 \documentclass{article}
@@ -32,6 +32,9 @@ snippet stexsummary "Template for basic summary" b
 \renewcommand\sectiontype{${2:Summary \thesection\ }}
 \renewcommand\mccustomll{${3:general}}
 \renewcommand\mccustomlr{${4:specifics}}
+% \renewcommand\thesection{\arabic{section}}
+% \renewcommand\sectionstuffsafter{}
+% \setcounter{section}{0}
 
 %----------------------------------------------------------------------
 \begin{document}
@@ -49,7 +52,7 @@ $8$0
 \end{document}
 endsnippet
 
-# Homework templates
+# Homework templates {{[1
 snippet stexhomework "Template for homework" b
 %----------------------------------------------------------------------
 \documentclass{article}
@@ -59,6 +62,10 @@ snippet stexhomework "Template for homework" b
 \renewcommand\mcsemester{${3:Spring}}
 \renewcommand\mcclassshort{${4:Metrics}}
 \renewcommand\mccustomlr{${5:PS2}}
+\renewcommand\sectionstuffsafter{}
+% \renewcommand\sectiontype{Problem \thesection\ }
+% \renewcommand\thesection{\arabic{section}}
+% \setcounter{section}{0}
 
 %----------------------------------------------------------------------
 \begin{document}
@@ -74,7 +81,7 @@ $8$0
 \end{document}
 endsnippet
 
-# Recitation template
+# Recitation template {{[1
 snippet stexrecitation "Template for recitation notes" b
 %----------------------------------------------------------------------
 \documentclass{article}
@@ -116,7 +123,7 @@ $14$0
 \end{document}
 endsnippet
 
-# Notes template
+# Notes template {{[1
 snippet stexnotes "Template for class notes" b
 %----------------------------------------------------------------------
 \documentclass{article}
@@ -125,7 +132,11 @@ snippet stexnotes "Template for class notes" b
 \renewcommand\mcyear{${2:2015}}
 \renewcommand\mcsemester{${3:Spring}}
 \renewcommand\mcclassshort{${4:Macro}}
-\renewcommand\mcdate{`!p snip.rv = get_today()`}
+\renewcommand\mcdate{${5:`!p snip.rv = get_today()`}}
+% \renewcommand\sectiontype{Lecture \thesection\ }
+% \renewcommand\thesection{\arabic{section}}
+% \renewcommand\sectionstuffsafter{}
+% \setcounter{section}{0}
 
 %----------------------------------------------------------------------
 \begin{document}
@@ -143,7 +154,47 @@ $9$0
 \end{document}
 endsnippet
 
-# Article template
+# Collections template {{[1
+snippet stexcollection "Template for collections" b
+%----------------------------------------------------------------------
+\documentclass{article}
+
+\usepackage[collection]{${1:mcpreamble}}
+\renewcommand\mcyear{${2:2015}}
+\renewcommand\mcsemester{${3:Spring}}
+\renewcommand\mcclassshort{${4:Macro}}
+
+% \renewcommand\mcdate{(`!p snip.rv = get_today()`)}
+% \renewcommand\sectiontype{Lecture \thesection\ }
+% \renewcommand\thesection{\arabic{section}}
+% \renewcommand\sectionstuffsafter{}
+% \setcounter{section}{0}
+% \setcounter{tocdepth}{2}
+% \renewcommand\tocstsec{\bfseries\itshape}
+% \renewcommand\tocstsub{\bfseries}
+% \renewcommand\tocstssub{}
+
+\title{
+	${5:ECON G6000}: ${6:Microeconomic Analysis} \\\\
+	$3 $2 ${7:Review}
+}
+\author{Mauricio C\'aceres \\\\ ${8:Columbia University}}
+\date{}
+
+%----------------------------------------------------------------------
+\begin{document}
+\displayoptions
+
+%----------------------------------------------------------------------
+% $9
+
+\include{${10:${9/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:-:\L$1$2$3\E)/ga}}}
+
+%----------------------------------------------------------------------
+\end{document}
+endsnippet
+
+# Article template {{{1
 snippet stexpaper "Temmplate for a paper" b
 %----------------------------------------------------------------------
 \documentclass[${2:11pt}]{article}
@@ -177,7 +228,7 @@ ${12:Amazing Results}$0
 \end{document}
 endsnippet
 
-# Beamer Template
+# Beamer Template {{{1
 snippet stexbeamer "Template for beamer presentation" b
 %--------------------------------------------------------------
 %\documentclass[handout]{beamer}
@@ -209,7 +260,7 @@ $6$0
 \end{document}
 endsnippet
 
-# merge pdf
+# merge pdf {{{1
 snippet stexmergepdf "Template to merge pdf's" b
 \documentclass{article}
 
@@ -228,10 +279,39 @@ $0
 \end{document}
 endsnippet
 
-# Basic document
+# Basic document {{{1
 snippet stexdoc "Basic LaTeX document" b
 \documentclass${2:[${3:11pt}]}{$1`!p snip.rv=complete(t[1], ['article', 'beamer', 'book', 'letter', 'memoir', 'minimal', 'proc', 'report', 'slides'])`}
 \begin{document}
 $0
 \end{document}
 endsnippet
+
+# Aux commands {{{1
+
+snippet auxtoc "Reset lengths for ToC" b
+% \setlength{\toctosec}{25pt}
+% \setlength{\toclabsec}{9pt}
+% \setlength{\toctosub}{\toctosec + \toclabsec + 6pt}
+% \setlength{\toclabsub}{9pt}
+% \setlength{\toctosubsub}{\toctosub + \toclabsub + \toclabsub + 6pt}
+% \setlength{\toclabsubsub}{18pt}
+endsnippet
+
+snippet auxpre "Generic Commands for Preamble" b
+\usepackage[summary]{${1:mcpreamble}}
+\renewcommand\sectiontype{${2:Summary \thesection\ }}
+\renewcommand\mccustomll{${3:general}}
+\renewcommand\mccustomlr{${4:specifics}}
+% \renewcommand\mcyear{2015}
+% \renewcommand\mcsemester{Spring}
+% \renewcommand\mcclassshort{Macro}
+% \renewcommand\mcdate{(`!p snip.rv = get_today()`)}
+% \renewcommand\thesection{\arabic{section}}
+% \renewcommand\sectionstuffsafter{}
+% \setcounter{section}{0}
+% summary    - \lhead{\color{light-gray} \mccustomll\ -- \mccustomlr}
+% classnotes - \lhead{\color{light-gray} \mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \mcdate}
+% homework   - \lhead{\color{light-gray} \mcsemester\ \mcyear\ -- \mcclassshort\ \mccustomlr}
+endsnippet
+
