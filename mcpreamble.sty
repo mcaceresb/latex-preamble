@@ -1,8 +1,7 @@
 %--------------------------------------------------------------
 % TODO: Figure out theorems and other math environments
 % TODO(mauricio): XeLaTeX math font       // Sun 24 May 2015 11:32:42 AM EDT
-% TODO(mauricio): setlist options         // Sun 24 May 2015 11:33:01 AM EDT
-% TODO(mauricio): ToC default             // Sun 24 May 2015 11:33:01 AM EDT
+% TODO(mauricio): ToC title               // Sun 24 May 2015 11:33:01 AM EDT
 % TODO(mauricio): references (natbib?)    // Sun 24 May 2015 11:33:08 AM EDT
 % TODO(mauricio): check lstlistings works // Sun 24 May 2015 12:48:23 PM EDT
 % TODO(mauricio): decide if dot/ddot is worth extra font hassle
@@ -30,6 +29,8 @@
 \usepackage{array}      % array options
 \usepackage{mathdesign} % extra math symbols
 \usepackage{mathtools}  % even more
+\usepackage{centernot}  % centernot for nice slash
+\usepackage{cancel}     % cancel command
 
 % layout and typesetting
 \usepackage{booktabs}   % beautiful tables
@@ -42,6 +43,7 @@
 \usepackage{titletoc}   % table of contents
 \usepackage[compact, explicit]{titlesec} % title manipulation
 \usepackage{listings}   % pretty code printing
+\usepackage{lscape}     % landscape environment
 \usepackage{siunitx}    % SI units
 \usepackage{url}        % break urls cross lines
 \usepackage[normalem]{ulem} % underline, strikeout, etc.
@@ -130,13 +132,18 @@
 }
 
 \setlist{
-  topsep     = 0pt, %
-  partopsep  = 0pt, %
-  itemsep    = 0pt, %
-  parsep     = 3pt  %
-  %leftmargin =0cm,  %
-  %itemindent =0.6cm, %
-  %label = (\alph*)
+  topsep        = 0pt, %
+  partopsep     = 0pt, %
+  itemsep       = 0pt, %
+  parsep        = 3pt, %
+  leftmargin    = 1.5em, %
+  % rightmargin   = 0pt, %
+  % listparindent = 0pt, %
+  % labelwidth    = 0pt, %
+  % labelsep      = 0pt, %
+  % labelindent   = 0pt, %
+  % itemindent    = 0pt, %
+  % label = (\alph*)
 }
 
 \lstset{
@@ -205,6 +212,14 @@
 \newcommand{\abs}[1]{|#1|}
 \newcommand{\ceil}[1]{\lceil#1\rceil}
 \newcommand{\floor}[1]{\lfloor#1\rfloor}
+
+\newcommand{\bset}[1]{\big\{#1\big\}}
+\newcommand{\bpar}[1]{\big(#1\big)}
+\newcommand{\brac}[1]{\big[#1\big]}
+\newcommand{\babs}[1]{\big|#1\big|}
+\newcommand{\bnorm}[1]{\big\|#1\big\|}
+\newcommand{\bceil}[1]{\big\lceil#1\big\rceil}
+\newcommand{\bfloor}[1]{\big\lfloor#1\big\rfloor}
 
 \newcommand{\Bset}[1]{\Big\{#1\Big\}}
 \newcommand{\Bpar}[1]{\Big(#1\Big)}
@@ -289,38 +304,39 @@
 %--------------------------------------------------------------
 % titletoc - table of contents style
 
-% \renewcommand{\contentsname}{Table of Contents\vspace{-\myaftersection}}
-% \titlecontents{section}
-%   [25pt]
-%   {}
-%   {%
-%     \bfseries
-%     \mytitlefamily
-%     \contentslabel{15pt}
-%   }
-%   {\hspace*{0pt}}
-%   {\titlerule*[\mydotsspacing]{.}\contentspage}
-%
-% \titlecontents{subsection}
-%   [40pt]
-%   {}
-%   {%
-%     \mytitleshape
-%     \mytitlefamily
-%     \contentslabel{15pt}
-%   }
-%   {\hspace*{0pt}}
-%   {\titlerule*[\mydotsspacing]{.}\contentspage}
-%
-% \titlecontents{subsubsection}
-%   [55pt]
-%   {}
-%   {%
-%     \mytitlefamily
-%     \contentslabel{15pt}
-%   }
-%   {\hspace*{0pt}}
-%   {\titlerule*[\mydotsspacing]{.}\contentspage}
+% \renewcommand{\contentsname}{Table of Contents\vspace{-72pt}}
+
+% ToC lengths
+\newlength\tocdots      \setlength{\tocdots}{6pt}
+\newlength\toctosec     \setlength{\toctosec}{25pt}
+\newlength\toclabsec    \setlength{\toclabsec}{18pt}
+\newlength\toctosub     \setlength{\toctosub}{\toctosec + \toclabsec}
+\newlength\toclabsub    \setlength{\toclabsub}{9pt}
+\newlength\toctosubsub  \setlength{\toctosubsub}{\toctosub + \toclabsub + \toclabsub + 6pt}
+\newlength\toclabsubsub \setlength{\toclabsubsub}{18pt}
+\newcommand\tocstsec{\bfseries\itshape}
+\newcommand\tocstsub{\bfseries}
+\newcommand\tocstssub{}
+
+% ToC style
+\titlecontents{section}[\toctosec]{}{
+    \tocstsec
+    \titlesfamily
+    \contentslabel{\toclabsec}
+  }{\hspace*{0pt}}{\titlerule*[\tocdots]{.}\contentspage}
+
+\titlecontents{subsection}[\toctosub]{}{
+    \tocstsub
+    \titlesfamily
+    \contentslabel{\toclabsub}
+  }{\hspace*{0pt}}{\titlerule*[\tocdots]{.}\contentspage}
+
+\titlecontents{subsubsection}[\toctosubsub]{}{
+    \tocstssub
+    \titlesfamily
+    \contentslabel{\toclabsubsub}
+  }{\hspace*{0pt}}{\titlerule*[\tocdots]{.}\contentspage}
+
 
 %--------------------------------------------------------------
 % definitions
@@ -339,6 +355,9 @@
 \newcommand{\keyref}[2]{\hyperref[#2]{\textbf{\textit{#1}}}}
 \newcommand{\tacaption}{\captionsetup[figure]{labelfont={it,footnotesize,color=normalgray},textfont={it,footnotesize,color=normalgray}}}
 \newcommand{\tafootnote}{\renewcommand\footnotelayout{\color{normalgray}}}
+\newcommand{\solution}{\textbf{\textit{Solution. }}}
+\newcommand{\notknown}[1]{{\color{light-gray}\itshape#1}}
+\newcommand{\unknown}[1]{{\color{light-gray}\itshape#1}}
 
 \newcommand{\smiley}{\tikz[baseline=-0.75ex,black]{%
     \draw circle (4mm);
@@ -416,12 +435,12 @@
 \DeclareOption{homework}{
   \renewcommand\sectiontype{Problem \thesection\ }
   \renewcommand\sectionstyle{\Large\bfseries\titlesfamily\color{titlecolor}}
-  \renewcommand\subsectionstyle{\bfseries\titlesfamily\color{displaygray}}
+  \renewcommand\subsectionstyle{\large\bfseries\titlesfamily\color{displaygray}}
   \renewcommand\subsubsectionstyle{\bfseries\titlesfamily\color{displaygray}}
 
   \renewcommand\thesection{\arabic{section}:}
-  \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}}
-  \renewcommand\thesubsubsection{\alph{subsubsection}.}
+  \renewcommand\thesubsection{\alph{subsection})}
+  \renewcommand\thesubsubsection{\alph{subsection}.\arabic{subsubsection}.}
 
   \lhead{\color{light-gray} \mcsemester\ \mcyear\ -- \mcclassshort\ \mccustomlr}
   \mcfont\mcends
@@ -451,6 +470,28 @@
   \renewcommand\sectiontype{Lecture \thesection\ }
   \lhead{\color{light-gray} \mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \mcdate}
   \mcfont\mcends
+}
+
+% Collection of other tex files
+\DeclareOption{collection}{
+  \renewcommand{\displayoptions}{
+    \pagenumbering{roman}
+    \pagestyle{plain}
+    \maketitle
+    \vspace{-36pt}
+    \tableofcontents 
+
+    \clearpage 
+    \setlength{\abovedisplayskip}{0.15cm}
+    \setlength{\belowdisplayskip}{0.15cm}
+    \color{displaygray}
+    \pagestyle{fancy}
+    \pagenumbering{arabic}
+  }
+  \lhead{\color{light-gray} \mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \leftmark}
+  \setcounter{tocdepth}{2}
+  \mcfont\mcends
+  \AtEndOfPackage{\usepackage{standalone}}
 }
 
 % Preprocessing for switching to article mode

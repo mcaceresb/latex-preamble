@@ -111,9 +111,8 @@ The following options are identical to `mcpaper` but use a particular font. Why 
 
 * Figure out math environments (theorems, proofs, etc.) Mainly numbering and style.
 * How to set XeLaTeX math font?
-* Does setlist work with nested lists the way I like?
-* Set up a default ToC style.
-* Figure out how to use references (with natbib?) and default citation style.
+* Does setlist work with nested lists 3+
+* Set up a default ToC title.
 * Check that lstlistings works as expected.
 * Decide if using `dot` and `ddot` is worth the extra font hassle.
 * Figure out beamer styles.
