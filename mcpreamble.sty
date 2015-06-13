@@ -1,8 +1,7 @@
 %--------------------------------------------------------------
 % TODO: Figure out theorems and other math environments
 % TODO(mauricio): XeLaTeX math font       // Sun 24 May 2015 11:32:42 AM EDT
-% TODO(mauricio): setlist options         // Sun 24 May 2015 11:33:01 AM EDT
-% TODO(mauricio): ToC default             // Sun 24 May 2015 11:33:01 AM EDT
+% TODO(mauricio): ToC title               // Sun 24 May 2015 11:33:01 AM EDT
 % TODO(mauricio): references (natbib?)    // Sun 24 May 2015 11:33:08 AM EDT
 % TODO(mauricio): check lstlistings works // Sun 24 May 2015 12:48:23 PM EDT
 % TODO(mauricio): decide if dot/ddot is worth extra font hassle
@@ -30,6 +29,8 @@
 \usepackage{array}      % array options
 \usepackage{mathdesign} % extra math symbols
 \usepackage{mathtools}  % even more
+\usepackage{centernot}  % centernot for nice slash
+\usepackage{cancel}     % cancel command
 
 % layout and typesetting
 \usepackage{booktabs}   % beautiful tables
@@ -42,6 +43,7 @@
 \usepackage{titletoc}   % table of contents
 \usepackage[compact, explicit]{titlesec} % title manipulation
 \usepackage{listings}   % pretty code printing
+\usepackage{lscape}     % landscape environment
 \usepackage{siunitx}    % SI units
 \usepackage{url}        % break urls cross lines
 \usepackage[normalem]{ulem} % underline, strikeout, etc.
@@ -130,13 +132,18 @@
 }
 
 \setlist{
-  topsep     = 0pt, %
-  partopsep  = 0pt, %
-  itemsep    = 0pt, %
-  parsep     = 3pt  %
-  %leftmargin =0cm,  %
-  %itemindent =0.6cm, %
-  %label = (\alph*)
+  topsep        = 0pt, %
+  partopsep     = 0pt, %
+  itemsep       = 0pt, %
+  parsep        = 3pt, %
+  leftmargin    = 1.5em, %
+  % rightmargin   = 0pt, %
+  % listparindent = 0pt, %
+  % labelwidth    = 0pt, %
+  % labelsep      = 0pt, %
+  % labelindent   = 0pt, %
+  % itemindent    = 0pt, %
+  % label = (\alph*)
 }
 
 \lstset{
@@ -206,6 +213,14 @@
 \newcommand{\ceil}[1]{\lceil#1\rceil}
 \newcommand{\floor}[1]{\lfloor#1\rfloor}
 
+\newcommand{\bset}[1]{\big\{#1\big\}}
+\newcommand{\bpar}[1]{\big(#1\big)}
+\newcommand{\brac}[1]{\big[#1\big]}
+\newcommand{\babs}[1]{\big|#1\big|}
+\newcommand{\bnorm}[1]{\big\|#1\big\|}
+\newcommand{\bceil}[1]{\big\lceil#1\big\rceil}
+\newcommand{\bfloor}[1]{\big\lfloor#1\big\rfloor}
+
 \newcommand{\Bset}[1]{\Big\{#1\Big\}}
 \newcommand{\Bpar}[1]{\Big(#1\Big)}
 \newcommand{\Brac}[1]{\Big[#1\Big]}
@@ -261,6 +276,55 @@
 }
 
 %--------------------------------------------------------------
+% cool comments (from tex.stackexchange)
+
+% http://tex.stackexchange.com/questions/39296/simulating-hand-drawn-lines
+\makeatletter
+\pgfdeclaredecoration{penciline}{initial}{%
+  \state{initial}[width=+\pgfdecoratedinputsegmentremainingdistance,auto corner on length=1mm,]{%
+    \pgfpathcurveto%
+    {% From
+      \pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}
+      {\pgfdecorationsegmentamplitude}
+    }
+    {%  Control 1
+      \pgfmathrand
+      \pgfpointadd{\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}{0pt}}
+      {\pgfqpoint{-\pgfdecorationsegmentaspect\pgfdecoratedinputsegmentremainingdistance}%
+      {\pgfmathresult\pgfdecorationsegmentamplitude}
+    }
+  }
+  {%TO
+    \pgfpointadd{\pgfpointdecoratedinputsegmentlast}{\pgfpoint{1pt}{1pt}}
+  }
+}
+\state{final}{}
+}
+\makeatother
+
+% http://tex.stackexchange.com/questions/78979/how-can-i-put-real-notes-in-the-margin
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\newcommand{\CommentText}[3]{\tikzmark{#1}#3\tikzmark{#2}}
+\NewDocumentCommand{\CommentPar}{%
+  O{}% #1 = draw options for the referenced word
+  O{}% #2 = draw options for the comment
+  O{}% #3 = draw options for the connecting line
+  m  % #4 = left \tikzmark name
+  m  % #5 = left \tikzmark name
+  m  % #6 = comment
+}{%
+  \begin{tikzpicture}[overlay,remember picture,decoration=penciline, thick]
+    \node [shape=rectangle,inner sep=2pt, draw=blue, ,rounded corners=2pt, fit={(#4.south) ($(#5.north)+(0,1ex)$)}, decorate, #1] (Source) {};
+    \node at ($(#4)!0.5!(#5)$) [blue, font=\itshape, rounded corners=5pt, decorate, draw=red, text width=2.5cm, #2, rotate=-35] (Label) {#6};
+    \draw [draw=red, decorate, out=220, in=-20, distance=0.05cm, #3] (Label) to (Source);
+  \end{tikzpicture}
+}
+
+\newcommand{\HandBox}[1]{%
+  \CommentText{LabelA}{LabelB}{#1} \CommentPar[red][opacity=0][opacity=0]{LabelA}{LabelB}{}
+}
+
+%--------------------------------------------------------------
 % titlesec - title format
 
 \titleformat{\section}[display]{
@@ -289,38 +353,39 @@
 %--------------------------------------------------------------
 % titletoc - table of contents style
 
-% \renewcommand{\contentsname}{Table of Contents\vspace{-\myaftersection}}
-% \titlecontents{section}
-%   [25pt]
-%   {}
-%   {%
-%     \bfseries
-%     \mytitlefamily
-%     \contentslabel{15pt}
-%   }
-%   {\hspace*{0pt}}
-%   {\titlerule*[\mydotsspacing]{.}\contentspage}
-%
-% \titlecontents{subsection}
-%   [40pt]
-%   {}
-%   {%
-%     \mytitleshape
-%     \mytitlefamily
-%     \contentslabel{15pt}
-%   }
-%   {\hspace*{0pt}}
-%   {\titlerule*[\mydotsspacing]{.}\contentspage}
-%
-% \titlecontents{subsubsection}
-%   [55pt]
-%   {}
-%   {%
-%     \mytitlefamily
-%     \contentslabel{15pt}
-%   }
-%   {\hspace*{0pt}}
-%   {\titlerule*[\mydotsspacing]{.}\contentspage}
+% \renewcommand{\contentsname}{Table of Contents\vspace{-72pt}}
+
+% ToC lengths
+\newlength\tocdots      \setlength{\tocdots}{6pt}
+\newlength\toctosec     \setlength{\toctosec}{25pt}
+\newlength\toclabsec    \setlength{\toclabsec}{18pt}
+\newlength\toctosub     \setlength{\toctosub}{\toctosec + \toclabsec}
+\newlength\toclabsub    \setlength{\toclabsub}{9pt}
+\newlength\toctosubsub  \setlength{\toctosubsub}{\toctosub + \toclabsub + \toclabsub + 6pt}
+\newlength\toclabsubsub \setlength{\toclabsubsub}{18pt}
+\newcommand\tocstsec{\bfseries\itshape}
+\newcommand\tocstsub{\bfseries}
+\newcommand\tocstssub{}
+
+% ToC style
+\titlecontents{section}[\toctosec]{}{
+    \tocstsec
+    \titlesfamily
+    \contentslabel{\toclabsec}
+  }{\hspace*{0pt}}{\titlerule*[\tocdots]{.}\contentspage}
+
+\titlecontents{subsection}[\toctosub]{}{
+    \tocstsub
+    \titlesfamily
+    \contentslabel{\toclabsub}
+  }{\hspace*{0pt}}{\titlerule*[\tocdots]{.}\contentspage}
+
+\titlecontents{subsubsection}[\toctosubsub]{}{
+    \tocstssub
+    \titlesfamily
+    \contentslabel{\toclabsubsub}
+  }{\hspace*{0pt}}{\titlerule*[\tocdots]{.}\contentspage}
+
 
 %--------------------------------------------------------------
 % definitions
@@ -339,6 +404,9 @@
 \newcommand{\keyref}[2]{\hyperref[#2]{\textbf{\textit{#1}}}}
 \newcommand{\tacaption}{\captionsetup[figure]{labelfont={it,footnotesize,color=normalgray},textfont={it,footnotesize,color=normalgray}}}
 \newcommand{\tafootnote}{\renewcommand\footnotelayout{\color{normalgray}}}
+\newcommand{\solution}{\textbf{\textit{Solution. }}}
+\newcommand{\notknown}[1]{{\color{light-gray}\itshape#1}}
+\newcommand{\unknown}[1]{{\color{light-gray}\itshape#1}}
 
 \newcommand{\smiley}{\tikz[baseline=-0.75ex,black]{%
     \draw circle (4mm);
@@ -416,12 +484,12 @@
 \DeclareOption{homework}{
   \renewcommand\sectiontype{Problem \thesection\ }
   \renewcommand\sectionstyle{\Large\bfseries\titlesfamily\color{titlecolor}}
-  \renewcommand\subsectionstyle{\bfseries\titlesfamily\color{displaygray}}
+  \renewcommand\subsectionstyle{\large\bfseries\titlesfamily\color{displaygray}}
   \renewcommand\subsubsectionstyle{\bfseries\titlesfamily\color{displaygray}}
 
   \renewcommand\thesection{\arabic{section}:}
-  \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}}
-  \renewcommand\thesubsubsection{\alph{subsubsection}.}
+  \renewcommand\thesubsection{\alph{subsection})}
+  \renewcommand\thesubsubsection{\alph{subsection}.\arabic{subsubsection}.}
 
   \lhead{\color{light-gray} \mcsemester\ \mcyear\ -- \mcclassshort\ \mccustomlr}
   \mcfont\mcends
@@ -451,6 +519,28 @@
   \renewcommand\sectiontype{Lecture \thesection\ }
   \lhead{\color{light-gray} \mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \mcdate}
   \mcfont\mcends
+}
+
+% Collection of other tex files
+\DeclareOption{collection}{
+  \renewcommand{\displayoptions}{
+    \pagenumbering{roman}
+    \pagestyle{plain}
+    \maketitle
+    \vspace{-36pt}
+    \tableofcontents 
+
+    \clearpage 
+    \setlength{\abovedisplayskip}{0.15cm}
+    \setlength{\belowdisplayskip}{0.15cm}
+    \color{displaygray}
+    \pagestyle{fancy}
+    \pagenumbering{arabic}
+  }
+  \lhead{\color{light-gray} \mcsemester\ \mcyear, \mcclassshort\ -- \sectiontype\ \leftmark}
+  \setcounter{tocdepth}{2}
+  \mcfont\mcends
+  \AtEndOfPackage{\usepackage{standalone}}
 }
 
 % Preprocessing for switching to article mode
