@@ -1,0 +1,137 @@
+%--------------------------------------------------------------
+% TODO(mauricio): Option so it runs on server // Wed 07 Oct 2015 04:28:40 PM EDT
+
+%--------------------------------------------------------------
+% standard heading
+
+\NeedsTeXFormat{LaTeX2e}       % Standard
+\ProvidesPackage{nberpreamble} % Mauricio's NBER Preamble
+\RequirePackage[l2tabu, orthodox]{nag} % nag me about things
+
+% ---------------------------------------------------------------------
+% Packages
+
+\usepackage[leqno]{amsmath} % Pretty math,
+\usepackage{amsfonts}       % prettier math---
+\usepackage{amssymb}        % seriously, this math is beautiful---
+\usepackage{amsthm}         % and it has theorems and such.
+\usepackage{graphicx}       % Graphicx
+\usepackage{pdflscape}      % Landscape between non-landscape
+\usepackage{geometry}       % Page layout
+\usepackage{tocloft}        % ToC options
+\usepackage{booktabs}       % Pretty tables
+\usepackage{longtable}      % Long table
+\usepackage{caption}        % Caption control
+\usepackage{microtype}      % Font tweaks
+\usepackage{multirow}       % Multiple rows in tables
+\usepackage{array}          % Array options
+\usepackage{color}          % Colors!
+\usepackage{xcolor}         % More colors
+\usepackage{cprotect}       % Use verbatim within other places
+\usepackage{float}          % Float options
+\usepackage{chngcntr}       % Change table counters
+\usepackage{hyperref}       % References with hyperlinks
+\usepackage[T1]{fontenc}    % Font encoding
+\usepackage{titletoc}       % ToC options
+\usepackage[titletoc]{appendix}
+\usepackage[compact, explicit]{titlesec}   % Title Options
+\usepackage[longnamesfirst]{natbib}        % Better citation
+\usepackage[nameinlink,noabbrev]{cleveref} % Semantic figure ref
+\usepackage[hang,flushmargin]{footmisc}    % Nice footnotes
+% \usepackage{mathpple}
+% \usepackage{quattrocento}
+
+% ---------------------------------------------------------------------
+% Options
+
+\geometry{
+  top    = 1in,
+  bottom = 1in,
+  left   = 1in,
+  right  = 1in
+}
+
+\hypersetup{
+  colorlinks,
+  allbordercolors=white,
+  allcolors=[rgb]{0.05 0.2 0.4},
+}
+
+\linespread{1.05}                % Space between lines
+\setlength{\parindent}{0pt}      % Indent in first line of paragraph
+\setlength{\parskip}{9pt}        % Skip between paragraphs
+\renewcommand\arraystretch{1.1}  % Array spacing
+\allowdisplaybreaks              % Can break math environments
+\interfootnotelinepenalty=10000  % Don't break footnotes across pages
+\setlength{\footnotemargin}{2mm} % Footnote margin
+\setlength{\skip\footins}{0.5cm} % Space from text to footnote
+\setlength{\footnotesep}{9pt}    % Space between footnotes
+\counterwithin{table}{section}   % Count tables within sections
+\counterwithin{figure}{section}  % Count figures within sections
+
+% ---------------------------------------------------------------------
+% Commands
+
+\makeatletter  % Lone tables appear on top
+\setlength{\@fptop}{0pt}
+\makeatother
+
+% Hyperlink to table of contents
+\newcommand{\uptotoc}[1][toc:toc]{
+  \hyperref[#1]{{\sffamily\itshape $\uparrow$ Back to ToC}}}
+
+% Captions are in footnotesize
+\newcommand{\footcaption}{
+  \captionsetup[table]{labelfont={footnotesize}, textfont={footnotesize}}}
+
+% Captions are in normal size
+\newcommand{\normalcaption}{
+  \captionsetup[table]{labelfont={}, textfont={}}}
+
+% Dot spacing from title to page number
+\renewcommand{\cftdotsep}{3}
+\renewcommand{\cfttabdotsep}{3}
+\renewcommand{\cftfigdotsep}{3}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% Table and figure titles and page numbers in ToC are footnotesize
+\renewcommand\cfttabfont{\footnotesize}
+\renewcommand\cfttabpagefont{\footnotesize}
+\renewcommand\cftfigfont{\footnotesize}
+\renewcommand\cftfigpagefont{\footnotesize}
+
+% ToC title
+\renewcommand{\listtablename}{\Large List of Tables}
+\renewcommand{\listfigurename}{\Large List of Figures}
+
+% Section and subsection numbering
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}\normalsize}
+
+% ---------------------------------------------------------------------
+% Document
+
+\title{\bfseries Report}
+\author{\sffamily Prepared by Mauricio C\'aceres}
+\date{\sffamily \today}
+
+%----------------------------------------------------------------------
+% Document options
+
+\newcommand{\displayoptions}{
+  \pagenumbering{roman}
+  \maketitle
+  \tableofcontents\label{toc:toc}
+  % \listoftables\label{toc:toctab}
+  % \listoffigures\label{toc:tocfig}
+  % \clearpage
+  \pagenumbering{arabic}
+}
+
+%--------------------------------------------------------------
+% package options
+
+\ProcessOptions\relax
+
+%--------------------------------------------------------------
+\endinput

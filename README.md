@@ -1,6 +1,7 @@
-## LaTeX Preambles v1.0.0
+LaTeX Preambles v1.0
+====================
 
-The main files here are `mcpreamble.sty` for LaTeX and `mcbeamerpreamble.sty` for beamer. They are my prefered preambles (and I add some options I like) and are meant for personal use. Copy at your own risk. Suggestions are appreciated. **PLEASE NOTE I AM JUST DESCRIBING `mcpreamble` HERE AND NOT `mcbeamerpreamble`**
+The main files here are `mcpreamble.sty` for LaTeX and `mcbeamerpreamble.sty` for beamer. They are my preferred preambles (and I add some options I like) and are meant for personal use. Copy at your own risk. Suggestions are appreciated. **PLEASE NOTE I AM JUST DESCRIBING `mcpreamble` HERE AND NOT `mcbeamerpreamble`**
 
 ## Quickstart
 
