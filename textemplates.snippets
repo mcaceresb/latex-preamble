@@ -281,9 +281,35 @@ endsnippet
 
 # Basic document {{{1
 snippet stexdoc "Basic LaTeX document" b
-\documentclass${2:[${3:11pt}]}{$1`!p snip.rv=complete(t[1], ['article', 'beamer', 'book', 'letter', 'memoir', 'minimal', 'proc', 'report', 'slides'])`}
+\documentclass${2:[${3:11pt}]}{$1`!p snip.rv=complete(t[1], ['article', 'beamer', 'book', 'letter', 'memoir', 'minimal', 'proc', 'report', 'scrartcl', 'slides'])`}
 \begin{document}
 $0
+\end{document}
+endsnippet
+
+# NBER template {{[1
+snippet stexnber "Template for NBER write-ups" b
+% ---------------------------------------------------------------------
+\documentclass${2:[${3:11pt}]}{$1`!p snip.rv=complete(t[1], ['article', 'scrartcl'])`}
+
+\usepackage{${4:nberpreamble}}
+\title{\bfseries ${5:Report}}
+\author{\sffamily ${6:Prepared by Mauricio C\'aceres}}
+\date{\sffamily ${7:\today}}
+
+% ---------------------------------------------------------------------
+\begin{document}
+\displayoptions
+
+\section{$8}
+
+% ---------------------------------------------------------------------
+\subsection{${9:subsection}}
+\label{sub:${10:${9/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+
+$11$0
+
+% ---------------------------------------------------------------------
 \end{document}
 endsnippet
 

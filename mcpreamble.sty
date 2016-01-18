@@ -7,7 +7,7 @@
 % TODO(mauricio): decide if dot/ddot is worth extra font hassle
 %                                         // Sun 24 May 2015 01:52:57 PM EDT
 % TODO(mauricio): delete "paper" options; add a font selection to snippet
-%                                         // Sun 31 May 2015 10:20:14 AM EDT 
+%                                         // Sun 31 May 2015 10:20:14 AM EDT
 
 %--------------------------------------------------------------
 % standard heading
@@ -48,11 +48,12 @@
 \usepackage{url}        % break urls cross lines
 \usepackage[normalem]{ulem} % underline, strikeout, etc.
 \usepackage[super]{nth} % adds superscripting \nth{n} is ^{nth}
+\usepackage{chngcntr}   % change counters
 
 % customize
 \usepackage{caption}   % awesome captioning options
 \usepackage{color}     % get color in your life
-\usepackage{xcolor}    % get even more color in your life
+\usepackage[usenames,dvipsnames]{xcolor} % get even more color in your life
 \usepackage{enumitem}  % customize enumerate
 \usepackage{environ}   % custom environments
 \usepackage{fancyhdr}  % header and footer
@@ -75,9 +76,12 @@
 \newcommand\mcfont[1][\usepackage{mathpple,quattrocento}]{\AtEndOfPackage{
   \ifxetex
     \usepackage{fontspec}
-    \fontspec{Open Sans}
-    \setmainfont{Open Sans Light}
-    %\setmathfont{Cambria Math}
+    % \fontspec{Open Sans}
+    % \setmainfont{Open Sans Light}
+    % \setmathfont{Cambria Math}
+    \usepackage{mathpple}
+    \fontspec{Quattrocento}
+    \setmainfont{Quattrocento}
   \else
     \usepackage[T1]{fontenc}
     #1
@@ -146,29 +150,54 @@
   % label = (\alph*)
 }
 
-\lstset{
-  language          = R,             % Set language
-  tabsize           = 4,             % Tab size
-  basicstyle        = \footnotesize, % Font size
-  flexiblecolumns   = true,          % Make it try to line up columns
-  showstringspaces  = false,         % Don't underline spaces in strings
-  showspaces        = false,         % Don't underline spaces
-  breaklines        = true,          % automatic line breaking
-  breakatwhitespace = true,          % breaks only at white space.
+% ---------------------------------------------------------------------
+% listings
+
+\newcommand{\textcolordummy}[2]{#2}
+\ifxetex
+  \lstdefinestyle{mcstyle}{
+    basicstyle        = \setmonofont{DejaVu Sans Mono}\footnotesize\ttfamily,
+    tabsize           = 4,       % Tab size
+    showstringspaces  = false,   % Don't underline spaces in strings
+    showspaces        = false,   % Don't underline spaces
+    breaklines        = true,    % automatic line breaking
+    breakatwhitespace = true,    % breaks only at white space.
+    % Comments are gray and italics
+    commentstyle      = \color{black!50}\itshape \let\textcolor\textcolordummy,
+  }
+\else
+  \lstdefinestyle{mcstyle}{
+    flexiblecolumns   = true,          % Make it try to line up columns
+    basicstyle        = \footnotesize, % Font size
+    tabsize           = 4,       % Tab size
+    showstringspaces  = false,   % Don't underline spaces in strings
+    showspaces        = false,   % Don't underline spaces
+    breaklines        = true,    % automatic line breaking
+    breakatwhitespace = true,    % breaks only at white space.
+    % Comments are gray and italics
+    commentstyle      = \color{black!60}\itshape \let\textcolor\textcolordummy,
+  }
+\fi
+
+% \lstset{
+%   language  = R,        % Set language
+%   style     = mcstyle,  % Set style
+% }
+
+\lstdefinestyle{numbers}{
   %numberstyle       = \footnotesize, % line number font
   %numbers           = left,          % line number alignment
   %stepnumber        = 1,             % number every 'stepnumber' lines
   %numbersep         = 5pt,           % set numbers 'numbersep' from code
-  commentstyle      = \color{black!70}\itshape, % Comments are gray and italics
-  morecomment=[s][\color{black!70}\itshape]{\'\'\'}{\'\'\'},
 }
+\input{lststata.tex}
 
 %--------------------------------------------------------------
 % general options
 
 % lengths
-\linespread{1.125}                    % space between lines
 \addtolength{\footnotesep}{3pt}       % space to the left of footnote
+\linespread{1.125}                    % space between lines
 \setlength{\parindent}{0pt}           % indent in first line of paragraph
 \setlength{\parskip}{9pt}             % skip between paragraphs
 \renewcommand\arraystretch{1.5}       % array spacing
@@ -187,6 +216,8 @@
 %--------------------------------------------------------------
 % extra maths
 
+\DeclareMathOperator*{\arginf}{arg\!\inf}
+\DeclareMathOperator*{\argsup}{arg\!\sup}
 \DeclareMathOperator*{\argmin}{arg\!\min}
 \DeclareMathOperator*{\argmax}{arg\!\max}
 \DeclareMathOperator*{\vect}{vec}
@@ -248,6 +279,7 @@
 \newtheorem{proposition}[]{\mctheoremstyle Proposition}
 \newtheorem{assumption}[]{\mctheoremstyle Assumption}
 \newtheorem{remark}[]{\mctheoremstyle Remark}
+\newtheorem{example}[]{\mctheoremstyle Example}
 
 %--------------------------------------------------------------
 % extra environments
@@ -391,9 +423,10 @@
 % definitions
 
 % colors
+\definecolor{faint-gray}{gray}{0.8}
 \definecolor{light-gray}{gray}{0.5}
 \definecolor{normalgray}{gray}{0.3}
-\definecolor{displaygray}{gray}{0.1}
+\definecolor{displaygray}{gray}{0.15}
 \colorlet{diffcolor}{black!20!blue!65!green}
 \colorlet{titlecolor}{blue!60!green}
 
@@ -402,7 +435,11 @@
 \newcommand{\mctheoremstyle}{\bfseries}
 \newcommand{\uptotoc}[1][toc:toc]{\hyperref[#1]{$\uparrow$ Back to top}}
 \newcommand{\keyref}[2]{\hyperref[#2]{\textbf{\textit{#1}}}}
-\newcommand{\tacaption}{\captionsetup[figure]{labelfont={it,footnotesize,color=normalgray},textfont={it,footnotesize,color=normalgray}}}
+\newcommand{\tacaption}{\captionsetup[figure]{
+    labelfont={it,footnotesize,color=normalgray},
+    textfont={it,footnotesize,color=normalgray}
+  }
+}
 \newcommand{\tafootnote}{\renewcommand\footnotelayout{\color{normalgray}}}
 \newcommand{\solution}{\textbf{\textit{Solution. }}}
 \newcommand{\notknown}[1]{{\color{light-gray}\itshape#1}}
@@ -528,9 +565,9 @@
     \pagestyle{plain}
     \maketitle
     \vspace{-36pt}
-    \tableofcontents 
+    \tableofcontents
 
-    \clearpage 
+    \clearpage
     \setlength{\abovedisplayskip}{0.15cm}
     \setlength{\belowdisplayskip}{0.15cm}
     \color{displaygray}
