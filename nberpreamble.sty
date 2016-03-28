@@ -29,9 +29,9 @@
 \usepackage{xcolor}         % More colors
 \usepackage{cprotect}       % Use verbatim within other places
 \usepackage{float}          % Float options
+\usepackage{tabularx}
 \usepackage{chngcntr}       % Change table counters
 \usepackage{hyperref}       % References with hyperlinks
-\usepackage[T1]{fontenc}    % Font encoding
 \usepackage{titletoc}       % ToC options
 \usepackage[titletoc]{appendix}
 \usepackage[compact, explicit]{titlesec}   % Title Options
@@ -107,6 +107,61 @@
 % Section and subsection numbering
 \renewcommand\thesection{\arabic{section}}
 \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}\normalsize}
+
+%--------------------------------------------------------------
+% extra maths
+
+\DeclareMathOperator*{\arginf}{arg\!\inf}
+\DeclareMathOperator*{\argsup}{arg\!\sup}
+\DeclareMathOperator*{\argmin}{arg\!\min}
+\DeclareMathOperator*{\argmax}{arg\!\max}
+\DeclareMathOperator*{\vect}{vec}
+\DeclareMathOperator*{\pmax}{p\!\max}
+\DeclareMathOperator*{\pmin}{p\!\min}
+
+\newcommand\toto{~\substack{\to\\[-2pt]\to}~} % correspondence
+\newcommand\indep{\perp\!\!\!\perp}           % orthogonal
+
+% Other stuffs
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\diag}[1]{\text{diag}\left\{#1\right\}}
+\newcommand{\ind}[1]{\mathbf{1}\left\{#1\right\}}
+
+% make dot and ddot larger (i.e. more visible)
+% \renewcommand{\dot}[1]{%
+%   \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}}}{#1}}
+% \renewcommand{\ddot}[1]{%
+%   \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}\hspace{0.05ex}.}}{#1}}
+
+% basic wrappers
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\abs}[1]{|#1|}
+\newcommand{\ceil}[1]{\lceil#1\rceil}
+\newcommand{\floor}[1]{\lfloor#1\rfloor}
+
+\newcommand{\bset}[1]{\big\{#1\big\}}
+\newcommand{\bpar}[1]{\big(#1\big)}
+\newcommand{\brac}[1]{\big[#1\big]}
+\newcommand{\babs}[1]{\big|#1\big|}
+\newcommand{\bnorm}[1]{\big\|#1\big\|}
+\newcommand{\bceil}[1]{\big\lceil#1\big\rceil}
+\newcommand{\bfloor}[1]{\big\lfloor#1\big\rfloor}
+
+\newcommand{\Bset}[1]{\Big\{#1\Big\}}
+\newcommand{\Bpar}[1]{\Big(#1\Big)}
+\newcommand{\Brac}[1]{\Big[#1\Big]}
+\newcommand{\Babs}[1]{\Big|#1\Big|}
+\newcommand{\Bnorm}[1]{\Big\|#1\Big\|}
+\newcommand{\Bceil}[1]{\Big\lceil#1\Big\rceil}
+\newcommand{\Bfloor}[1]{\Big\lfloor#1\Big\rfloor}
+
+\newcommand{\Fset}[1]{\left\{#1\right\}}
+\newcommand{\Fpar}[1]{\left(#1\right)}
+\newcommand{\Frac}[1]{\left[#1\right]}
+\newcommand{\Fabs}[1]{\left|#1\right|}
+\newcommand{\Fnorm}[1]{\left\|#1\right\|}
+\newcommand{\Fceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\Ffloor}[1]{\left\lfloor#1\right\rfloor}
 
 % ---------------------------------------------------------------------
 % Document
