@@ -153,7 +153,7 @@
 % ---------------------------------------------------------------------
 % listings
 
-\newcommand{\textcolordummy}[2]{#2}
+\providecommand{\textcolordummy}[2]{#2}
 \ifxetex
   \lstdefinestyle{mcstyle}{
     basicstyle        = \setmonofont{DejaVu Sans Mono}\footnotesize\ttfamily,
@@ -179,17 +179,7 @@
   }
 \fi
 
-% \lstset{
-%   language  = R,        % Set language
-%   style     = mcstyle,  % Set style
-% }
-
-\lstdefinestyle{numbers}{
-  %numberstyle       = \footnotesize, % line number font
-  %numbers           = left,          % line number alignment
-  %stepnumber        = 1,             % number every 'stepnumber' lines
-  %numbersep         = 5pt,           % set numbers 'numbersep' from code
-}
+\input{lstsas.tex}
 \input{lststata.tex}
 
 %--------------------------------------------------------------
