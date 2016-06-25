@@ -341,3 +341,20 @@ snippet auxpre "Generic Commands for Preamble" b
 % homework   - \lhead{\color{light-gray} \mcsemester\ \mcyear\ -- \mcclassshort\ \mccustomlr}
 endsnippet
 
+snippet appendix "Appendices environment with tabletoc" b
+% ---------------------------------------------------------------------
+% Appendices
+
+\renewcommand\thesection{\Alph{section}.}
+\titleformat{\section}[display]{
+	\Large\bfseries
+}{Appendix \thesection.\ #1}{0pt}{\vspace{-24pt}}
+\renewcommand\thesubsection{\Alph{section}.\arabic{subsection}}
+\clearpage
+\begin{appendices}
+
+$0
+
+\end{appendices}
+% ---------------------------------------------------------------------
+endsnippet
