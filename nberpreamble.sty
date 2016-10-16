@@ -39,8 +39,6 @@
 \usepackage[nameinlink,noabbrev]{cleveref} % Semantic figure ref
 \usepackage[hang,flushmargin]{footmisc}    % Nice footnotes
 % \usepackage[longnamesfirst]{natbib}
-% \usepackage{mathpple}
-% \usepackage{quattrocento}
 
 % ---------------------------------------------------------------------
 % Options
@@ -117,6 +115,11 @@
 % Section and subsection numbering
 \renewcommand\thesection{\arabic{section}}
 \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}\normalsize}
+
+% Wrapped columns
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 %--------------------------------------------------------------
 % extra maths
