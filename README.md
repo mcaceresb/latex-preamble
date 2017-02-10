@@ -1,7 +1,9 @@
 LaTeX Preambles v1.0
 ====================
 
-The main files here are `mcpreamble.sty` for LaTeX and `mcbeamerpreamble.sty` for beamer. They are my preferred preambles (and I add some options I like) and are meant for personal use. Copy at your own risk. Suggestions are appreciated. **PLEASE NOTE I AM JUST DESCRIBING `mcpreamble` HERE AND NOT `mcbeamerpreamble`**
+The main files here are `mcpreamble.sty` and `nberpreamble.sty` for LaTeX. These are my preferred preambles (and I add some options I like) and are meant for personal use. Copy at your own risk. Suggestions are appreciated.
+
+`nberpreamble` is a rather simple package with output that will look instantly recognizable to anyone who has compiled using LaTeX. It mainly adds some commands and options I like. `mcpreamble` is a more complicated experimental package that I document here.
 
 ## Quickstart
 
@@ -34,7 +36,7 @@ I use [`vim`](http://www.vim.org/) for editing text with the excellent [`UltiSni
 
 I turned my preferred LaTeX preamble into a `.sty` file so it could be loaded as a package. Why?
 
-1. I can load almost my preferred defaults just with `\useackage[option]{mcpeamble}`
+1. I can load most preferred defaults just with `\useackage[option]{mcpeamble}`
 2. The difference between my template for a recitation or a summary or a homework almost always amounts to nothing more than some slight changes to title and header style and definitions. In an `.sty` file I can specify package options and change between these easily. Further, I can actually make relatively significant format changes without that much of a hustle while keeping all the packages and definitions I would like to keep.
 3. Often I find that not all the commands I expect are there. Then I have to go hunting for a particular version of `preamble.tex` and it becomes messy.
 
@@ -48,7 +50,7 @@ For a complete list of packages loaded see the `.sty` files. The features each o
 * [PGFPlots](http://pgfplots.net) complements TikZ beautifully and allows drawing functions very easily.
 * [The AMS packages](http://ams.org/publications/authors/tex/amslatex) are always good to have for nice math addons.
 * [`hyperref`](http://www.tug.org/applications/hyperref/manual.html). By default links are colored a shade of purple and have no border.
-* [`listings`](http://ctan.org/tex-archive/macros/latex/contrib/listings/) for making code look pretty. By default
+* [`listings`](http://ctan.org/tex-archive/macros/latex/contrib/listings/) for making code look pretty (lately I favor [`minted`](https://github.com/gpoore/minted), however). By default
     * Spaces are not highlighted
     * Tabs are 4 spaces
     * `flexiblecolumns` is set to `true`
@@ -110,15 +112,8 @@ The following options are identical to `mcpaper` but use a particular font. Why 
 
 ## TODO
 
-* Figure out math environments (theorems, proofs, etc.) Mainly numbering and style.
-* How to set XeLaTeX math font?
-* Does setlist work with nested lists 3+
-* Set up a default ToC title.
-* Check that lstlistings works as expected.
-* Decide if using `dot` and `ddot` is worth the extra font hassle.
-* Figure out beamer styles.
-* Delete "paper" options and add a font selection to snippet instead.
-
-## Copyright and License
-
-Choose a license. Recall the `\smiley` and `\sadness` code you got online.
+- [ ] Figure out math environment numbering and style.
+- [ ] Does setlist work with nested lists 3+?
+- [ ] Set up a default ToC title.
+- [ ] Figure out beamer styles.
+- [ ] Delete "paper" options and add a font selection to snippet instead.
