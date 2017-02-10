@@ -3,7 +3,6 @@
 % TODO(mauricio): XeLaTeX math font       // Sun 24 May 2015 11:32:42 AM EDT
 % TODO(mauricio): ToC title               // Sun 24 May 2015 11:33:01 AM EDT
 % TODO(mauricio): references (natbib?)    // Sun 24 May 2015 11:33:08 AM EDT
-% TODO(mauricio): check lstlistings works // Sun 24 May 2015 12:48:23 PM EDT
 % TODO(mauricio): decide if dot/ddot is worth extra font hassle
 %                                         // Sun 24 May 2015 01:52:57 PM EDT
 % TODO(mauricio): delete "paper" options; add a font selection to snippet
@@ -53,7 +52,7 @@
 % customize
 \usepackage{caption}   % awesome captioning options
 \usepackage{color}     % get color in your life
-\usepackage[usenames,dvipsnames]{xcolor} % get even more color in your life
+\usepackage[usenames,svgnames]{xcolor} % get even more color in your life
 \usepackage{enumitem}  % customize enumerate
 \usepackage{environ}   % custom environments
 \usepackage{fancyhdr}  % header and footer
@@ -153,7 +152,7 @@
 % ---------------------------------------------------------------------
 % listings
 
-\newcommand{\textcolordummy}[2]{#2}
+\providecommand{\textcolordummy}[2]{#2}
 \ifxetex
   \lstdefinestyle{mcstyle}{
     basicstyle        = \setmonofont{DejaVu Sans Mono}\footnotesize\ttfamily,
@@ -179,18 +178,8 @@
   }
 \fi
 
-% \lstset{
-%   language  = R,        % Set language
-%   style     = mcstyle,  % Set style
-% }
-
-\lstdefinestyle{numbers}{
-  %numberstyle       = \footnotesize, % line number font
-  %numbers           = left,          % line number alignment
-  %stepnumber        = 1,             % number every 'stepnumber' lines
-  %numbersep         = 5pt,           % set numbers 'numbersep' from code
-}
-\input{lststata.tex}
+% \input{lstsas.tex}
+% \input{lststata.tex}
 
 %--------------------------------------------------------------
 % general options
@@ -486,8 +475,8 @@
 % Author
 \newcommand\mcauthor{Mauricio C\'aceres}
 \newcommand\mcinstitution{University}
-\newcommand\mcclasslong{Topics in Trade and Development}
-\newcommand\mcclassshort{Topics Trade}
+\newcommand\mcclasslong{Long Class Name}
+\newcommand\mcclassshort{Short Name}
 \newcommand\mcclasscode{ECONG6226}
 \newcommand\mcyear{2015}
 \newcommand\mcsemester{Spring}

@@ -11,35 +11,34 @@
 % ---------------------------------------------------------------------
 % Packages
 
-\usepackage[leqno]{amsmath} % Pretty math,
-\usepackage{amsfonts}       % prettier math---
-\usepackage{amssymb}        % seriously, this math is beautiful---
-\usepackage{amsthm}         % and it has theorems and such.
-\usepackage{graphicx}       % Graphicx
-\usepackage{pdflscape}      % Landscape between non-landscape
-\usepackage{geometry}       % Page layout
-\usepackage{tocloft}        % ToC options
-\usepackage{booktabs}       % Pretty tables
-\usepackage{longtable}      % Long table
-\usepackage{caption}        % Caption control
-\usepackage{microtype}      % Font tweaks
-\usepackage{multirow}       % Multiple rows in tables
-\usepackage{array}          % Array options
-\usepackage{color}          % Colors!
-\usepackage{xcolor}         % More colors
-\usepackage{cprotect}       % Use verbatim within other places
-\usepackage{float}          % Float options
-\usepackage{chngcntr}       % Change table counters
-\usepackage{hyperref}       % References with hyperlinks
-\usepackage[T1]{fontenc}    % Font encoding
-\usepackage{titletoc}       % ToC options
-\usepackage[titletoc]{appendix}
+\usepackage{color}              % Colors!
+\usepackage[svgnames]{xcolor}   % More colors
+\usepackage[leqno]{amsmath}     % Pretty math,
+\usepackage[titletoc]{appendix} % Appendices environment
+\usepackage{amsfonts}           % prettier math---
+\usepackage{amssymb}            % seriously, this math is beautiful---
+\usepackage{amsthm}             % and it has theorems and such.
+\usepackage{graphicx}           % Graphicx
+\usepackage{pdflscape}          % Landscape between non-landscape
+\usepackage{geometry}           % Page layout
+\usepackage{tocloft}            % ToC options
+\usepackage{booktabs}           % Pretty tables
+\usepackage{longtable}          % Long table
+\usepackage{caption}            % Caption control
+\usepackage{microtype}          % Font tweaks
+\usepackage{multirow}           % Multiple rows in tables
+\usepackage{array}              % Array options
+\usepackage{cprotect}           % Use verbatim within other places
+\usepackage{float}              % Float options
+\usepackage{tabularx}           % Tabular with nice width options
+\usepackage{chngcntr}           % Change table counters
+\usepackage{hyperref}           % References with hyperlinks
+\usepackage{titletoc}           % ToC options
+\usepackage{natbib}             % Better citation
 \usepackage[compact, explicit]{titlesec}   % Title Options
-\usepackage[longnamesfirst]{natbib}        % Better citation
 \usepackage[nameinlink,noabbrev]{cleveref} % Semantic figure ref
 \usepackage[hang,flushmargin]{footmisc}    % Nice footnotes
-% \usepackage{mathpple}
-% \usepackage{quattrocento}
+\usepackage[longnamesfirst]{natbib}
 
 % ---------------------------------------------------------------------
 % Options
@@ -55,6 +54,12 @@
   colorlinks,
   allbordercolors=white,
   allcolors=[rgb]{0.05 0.2 0.4},
+}
+
+\hypersetup{
+  colorlinks,
+  allbordercolors=white,
+  allcolors=[rgb]{0.05 0.2 0.5},
 }
 
 \linespread{1.05}                % Space between lines
@@ -75,6 +80,9 @@
 \makeatletter  % Lone tables appear on top
 \setlength{\@fptop}{0pt}
 \makeatother
+
+\newcommand{\simprox}{$\scriptstyle\sim$}
+\newcommand{\linksto}{$\scriptstyle\nearrow$}
 
 % Hyperlink to table of contents
 \newcommand{\uptotoc}[1][toc:toc]{
@@ -107,6 +115,66 @@
 % Section and subsection numbering
 \renewcommand\thesection{\arabic{section}}
 \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}\normalsize}
+
+% Wrapped columns
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%--------------------------------------------------------------
+% extra maths
+
+\DeclareMathOperator*{\arginf}{arg\!\inf}
+\DeclareMathOperator*{\argsup}{arg\!\sup}
+\DeclareMathOperator*{\argmin}{arg\!\min}
+\DeclareMathOperator*{\argmax}{arg\!\max}
+\DeclareMathOperator*{\vect}{vec}
+\DeclareMathOperator*{\pmax}{p\!\max}
+\DeclareMathOperator*{\pmin}{p\!\min}
+
+\newcommand\toto{~\substack{\to\\[-2pt]\to}~} % correspondence
+\newcommand\indep{\perp\!\!\!\perp}           % orthogonal
+
+% Other stuffs
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\diag}[1]{\text{diag}\left\{#1\right\}}
+\newcommand{\ind}[1]{\mathbf{1}\left\{#1\right\}}
+
+% make dot and ddot larger (i.e. more visible)
+% \renewcommand{\dot}[1]{%
+%   \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}}}{#1}}
+% \renewcommand{\ddot}[1]{%
+%   \overset{\mbox{\fontsize{9pt}{9pt}\selectfont\bfseries {.}\hspace{0.05ex}.}}{#1}}
+
+% basic wrappers
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\abs}[1]{|#1|}
+\newcommand{\ceil}[1]{\lceil#1\rceil}
+\newcommand{\floor}[1]{\lfloor#1\rfloor}
+
+\newcommand{\bset}[1]{\big\{#1\big\}}
+\newcommand{\bpar}[1]{\big(#1\big)}
+\newcommand{\brac}[1]{\big[#1\big]}
+\newcommand{\babs}[1]{\big|#1\big|}
+\newcommand{\bnorm}[1]{\big\|#1\big\|}
+\newcommand{\bceil}[1]{\big\lceil#1\big\rceil}
+\newcommand{\bfloor}[1]{\big\lfloor#1\big\rfloor}
+
+\newcommand{\Bset}[1]{\Big\{#1\Big\}}
+\newcommand{\Bpar}[1]{\Big(#1\Big)}
+\newcommand{\Brac}[1]{\Big[#1\Big]}
+\newcommand{\Babs}[1]{\Big|#1\Big|}
+\newcommand{\Bnorm}[1]{\Big\|#1\Big\|}
+\newcommand{\Bceil}[1]{\Big\lceil#1\Big\rceil}
+\newcommand{\Bfloor}[1]{\Big\lfloor#1\Big\rfloor}
+
+\newcommand{\Fset}[1]{\left\{#1\right\}}
+\newcommand{\Fpar}[1]{\left(#1\right)}
+\newcommand{\Frac}[1]{\left[#1\right]}
+\newcommand{\Fabs}[1]{\left|#1\right|}
+\newcommand{\Fnorm}[1]{\left\|#1\right\|}
+\newcommand{\Fceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\Ffloor}[1]{\left\lfloor#1\right\rfloor}
 
 % ---------------------------------------------------------------------
 % Document
